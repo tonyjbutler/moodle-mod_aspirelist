@@ -101,3 +101,13 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
     margin: 0.5em 0;
     padding-left: 2.4em;
 }
+
+#page-mod-aspirelist-view ul.sectionitems li.listitem span.resourcetype,
+div.aspirelistbox ul.sectionitems li.listitem span.resourcetype {
+    font-style: italic;
+}
+
+#page-mod-aspirelist-view ul.sectionitems li.listitem span.itemimportance,
+div.aspirelistbox ul.sectionitems li.listitem span.itemimportance {
+    font-weight: bold;
+}

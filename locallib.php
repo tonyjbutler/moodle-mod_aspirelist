@@ -648,14 +648,14 @@ class aspirelist {
             $typequery = '../p/span[contains(@class, "resourceType")]';
             $resourcetype = $this->get_dom_nodelist($xpath, $typequery, $itemdetails, true, true);
             if ($resourcetype) {
-                $item->resourcetype = html_writer::tag('em', $resourcetype, array('class' => 'resourcetype'));
+                $item->resourcetype = html_writer::tag('span', $resourcetype, array('class' => 'resourcetype'));
             } else {
                 $item->resourcetype = '';
             }
 
             $importance = $this->get_dom_nodelist($xpath, '../p/strong', $itemdetails, true, true);
             if ($importance) {
-                $item->importance = ' ' . html_writer::tag('strong', $importance, array('class' => 'itemimportance'));
+                $item->importance = ' ' . html_writer::tag('span', $importance, array('class' => 'itemimportance'));
             } else {
                 $item->importance = '';
             }
