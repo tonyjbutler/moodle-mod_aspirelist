@@ -1,0 +1,103 @@
+/*
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * CSS style overrides for aspirelist module
+ *
+ * @package    mod_aspirelist
+ * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+#page-mod-aspirelist-mod .mform #id_content div.selectresources {
+    width: 15%;
+    text-align: right;
+    float: left;
+}
+
+#page-mod-aspirelist-mod .mform #id_content .fitem_fcheckbox + div.selectresources {
+    margin-top: 1em;
+}
+
+#page-mod-aspirelist-mod .mform #id_content h3, #page-mod-aspirelist-mod .mform #id_content h4,
+#page-mod-aspirelist-mod .mform #id_content h5, #page-mod-aspirelist-mod .mform #id_content h6 {
+    margin: 1em 0 0 16%;
+    text-align: left;
+}
+
+#page-mod-aspirelist-mod .mform #id_content div.sectionnote {
+    margin-left: 16%;
+}
+
+#page-mod-aspirelist-mod .mform #id_content .fitem {
+    overflow: inherit;
+}
+
+#page-mod-aspirelist-mod .mform #id_content .fitem .fsubmit {
+    margin-left: 16%;
+    text-align: left;
+}
+
+#page-mod-aspirelist-mod .mform #id_content .fitem .fitemtitle {
+    width: 80%;
+    text-align: left;
+    float: right;
+}
+
+#page-mod-aspirelist-mod .mform #id_content .fitem .fcheckbox {
+    margin-left: 16%;
+    text-align: right;
+}
+
+#page-mod-aspirelist-view h3.sectionheading, #page-mod-aspirelist-view h4.sectionheading,
+#page-mod-aspirelist-view h5.sectionheading, #page-mod-aspirelist-view h6.sectionheading {
+    margin: 1em 0 !important;
+    text-align: left;
+}
+
+#page-mod-aspirelist-view h4.sectionheading + div.sectionnote,
+#page-mod-aspirelist-view h5.sectionheading + div.sectionnote,
+#page-mod-aspirelist-view h6.sectionheading + div.sectionnote {
+    margin-top: -1em;
+}
+
+div.aspirelistbox {
+    border: none;
+}
+
+div.aspirelistbox h3.sectionheading, div.aspirelistbox h4.sectionheading,
+div.aspirelistbox h5.sectionheading, div.aspirelistbox h6.sectionheading {
+    margin: 1em 0 !important;
+    text-align: left;
+}
+
+div.aspirelistbox h4.sectionheading + div.sectionnote,
+div.aspirelistbox h5.sectionheading + div.sectionnote,
+div.aspirelistbox h6.sectionheading + div.sectionnote {
+    margin-top: -1em;
+}
+
+#page-mod-aspirelist-view ul.sectionitems, div.aspirelistbox ul.sectionitems {
+    list-style-type: none;
+}
+
+#page-mod-aspirelist-view ul.sectionitems li.listitem, div.aspirelistbox ul.sectionitems li.listitem {
+    background-image:  url('../mod/aspirelist/pix/bullet.png');
+    background-repeat: no-repeat;
+    background-position: 0 0.2em;
+    margin: 0.5em 0;
+    padding-left: 2.4em;
+}

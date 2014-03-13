@@ -1,0 +1,53 @@
+<?php
+
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Aspirelist module admin settings and defaults
+ *
+ * @package    mod_aspirelist
+ * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die;
+
+if ($ADMIN->fulltree) {
+    // General settings.
+    $settings->add(new admin_setting_configcheckbox('aspirelist/requiremodintro', get_string('requiremodintro', 'aspirelist'),
+            get_string('configrequiremodintro', 'aspirelist'), 0));
+
+    // Talis Aspire URL.
+    $settings->add(new admin_setting_configtext('aspirelist/aspireurl', get_string('aspireurl', 'aspirelist'),
+            get_string('configaspireurl', 'aspirelist'), '', PARAM_URL));
+
+    // Knowledge group.
+    $optionskg = array();
+    $optionskg['modules'] = get_string('modules', 'aspirelist');
+    $optionskg['courses'] = get_string('courses');
+    $optionskg['units'] = get_string('units', 'aspirelist');
+    $optionskg['programmes'] = get_string('programmes', 'aspirelist');
+    $optionskg['subjects'] = get_string('subjects', 'aspirelist');
+    $settings->add(new admin_setting_configselect('aspirelist/knowledgegroup', get_string('knowledgegroup', 'aspirelist'),
+            get_string('configknowledgegroup', 'aspirelist'), 'modules', $optionskg));
+
+    // Code source.
+    $optionscs = array();
+    $optionscs['idnumber'] = get_string('idnumbercourse');
+    $optionscs['codetable'] = get_string('codetable', 'aspirelist');
+    $settings->add(new admin_setting_configselect('aspirelist/codesource', get_string('codesource', 'aspirelist'),
+            get_string('configcodesource', 'aspirelist'), 'idnumber', $optionscs));
+}

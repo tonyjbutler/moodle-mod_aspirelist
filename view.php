@@ -1,0 +1,72 @@
+<?php
+
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Aspirelist module main user interface
+ *
+ * @package    mod_aspirelist
+ * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+require_once('../../config.php');
+require_once($CFG->dirroot . '/mod/aspirelist/locallib.php');
+require_once($CFG->libdir . '/completionlib.php');
+
+$id = optional_param('id', 0, PARAM_INT);  // Course module id.
+$a  = optional_param('a', 0, PARAM_INT);   // Aspirelist instance id.
+
+if ($a) {  // Two ways to specify the module.
+    $aspirelist = $DB->get_record('aspirelist', array('id' => $a), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('aspirelist', $aspirelist->id, $aspirelist->course, true, MUST_EXIST);
+
+} else {
+    $cm = get_coursemodule_from_id('aspirelist', $id, 0, true, MUST_EXIST);
+    $aspirelist = $DB->get_record('aspirelist', array('id' => $cm->instance), '*', MUST_EXIST);
+}
+
+$course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);
+
+require_course_login($course, true, $cm);
+$context = context_module::instance($cm->id);
+require_capability('mod/aspirelist:view', $context);
+if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
+    redirect(course_get_url($aspirelist->course, $cm->sectionnum));
+}
+
+add_to_log($course->id, 'aspirelist', 'view', 'view.php?id=' . $cm->id, $aspirelist->id, $cm->id);
+
+// Update 'viewed' state if required by completion system.
+$completion = new completion_info($course);
+$completion->set_module_viewed($cm);
+
+$PAGE->set_url('/mod/aspirelist/view.php', array('id' => $cm->id));
+
+$PAGE->set_title($course->shortname . ': ' . $aspirelist->name);
+$PAGE->set_heading($course->fullname);
+$PAGE->set_activity_record($aspirelist);
+
+
+$output = $PAGE->get_renderer('mod_aspirelist');
+
+echo $output->header();
+
+echo $output->heading(format_string($aspirelist->name), 2);
+
+echo $output->display_aspirelist($aspirelist);
+
+echo $output->footer();
