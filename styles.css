@@ -95,6 +95,7 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem, div.aspirelistbox ul.sectionitems li.listitem {
+    line-height: 1.4em;
     background-image:  url('../mod/aspirelist/pix/bullet.png');
     background-repeat: no-repeat;
     background-position: 0 0.2em;
@@ -104,7 +105,16 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem span.resourcetype,
 div.aspirelistbox ul.sectionitems li.listitem span.resourcetype {
-    font-style: italic;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: #FFF;
+    text-shadow: 0 -0.1em 0 rgba(0,0,0, 0.25);
+    background-color: #999;
+    padding: 0.2em 0.4em;
+    vertical-align: bottom;
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem span.itemimportance,
