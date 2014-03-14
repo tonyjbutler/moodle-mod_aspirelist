@@ -257,7 +257,7 @@ function aspirelist_get_coursemodule_info($cm) {
  * @param cm_info $cm
  */
 function aspirelist_cm_info_dynamic(cm_info $cm) {
-    if ($cm->customdata) {
+    if ($cm->get_custom_data()) {
         // The field 'customdata' is not empty IF AND ONLY IF we display contents inline.
         $cm->set_on_click('return false;');
 
@@ -276,11 +276,11 @@ function aspirelist_cm_info_dynamic(cm_info $cm) {
 function aspirelist_cm_info_view(cm_info $cm) {
     global $PAGE;
 
-    if ($cm->uservisible && $cm->customdata && has_capability('mod/aspirelist:view', $cm->context)) {
+    if ($cm->uservisible && $cm->get_custom_data() && has_capability('mod/aspirelist:view', $cm->context)) {
         // Restore aspirelist object from customdata.
         // Note the field 'customdata' is not empty IF AND ONLY IF we display contents inline.
         // Otherwise the content is default.
-        $aspirelist = $cm->customdata;
+        $aspirelist = $cm->get_custom_data();
         $aspirelist->id = (int)$cm->instance;
         $aspirelist->course = (int)$cm->course;
         $aspirelist->display = ASPIRELIST_DISPLAY_INLINE;
