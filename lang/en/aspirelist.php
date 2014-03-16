@@ -39,7 +39,7 @@ $string['display'] = 'Display resource list contents';
 $string['display_help'] = 'If you choose to display the resource list contents on a course page, there will be no link ' .
         'to a separate page. The description will be displayed only if "Display description on course page" is checked.' .
         '<br />Also note that participants\' view actions cannot be logged in this case.';
-$string['displayinline'] = 'Inline on a course page';
+$string['displayinline'] = 'Inline on the course page';
 $string['displaypage'] = 'On a separate page';
 $string['itemcount'] = '{$a} item';
 $string['itemcountplural'] = '{$a} items';
