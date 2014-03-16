@@ -263,7 +263,7 @@ function aspirelist_get_coursemodule_info($cm) {
 function aspirelist_cm_info_dynamic(cm_info $cm) {
     if ($cm->customdata) {
         // The field 'customdata' is not empty IF AND ONLY IF we display contents inline.
-        $cm->set_no_view_link();
+        $cm->set_on_click('return false;');
     }
 }
 

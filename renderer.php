@@ -55,7 +55,22 @@ class mod_aspirelist_renderer extends plugin_renderer_base {
         }
 
         if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
-            $output .= $this->output->box($aspirelist->html, 'generalbox aspirelistbox');
+            $output .= $this->output->box($aspirelist->html, 'generalbox aspirelistbox', 'aspirelist-' . $cm->id);
+            $output .= "<script type=\"text/javascript\">" .
+                       "YUI().use('node', function(Y) {" .
+                           "Y.one('#aspirelist-$cm->id').hide();" .
+
+                           "Y.delegate('click', function(e) {" .
+                               "var linkhref = e.currentTarget.get('href')," .
+                                   "list = Y.one('#aspirelist-$cm->id');" .
+
+                               "if (linkhref === '$cm->url') {" .
+                                   "list.toggleView();" .
+                               "}" .
+
+                           "}, document, 'a');" .
+                       "});" .
+                       "</script>";
         } else {
             $output .= $this->output->box($aspirelist->html, 'generalbox', 'aspirelist');
         }
