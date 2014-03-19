@@ -28,13 +28,28 @@ $string['aspirelist:addinstance'] = 'Add a new resource list';
 $string['aspirelist:view'] = 'View resource list content';
 $string['aspirelistname'] = 'Resource list name';
 $string['aspireurl'] = 'Talis Aspire URL';
+$string['codecolumn'] = 'Aspire code column';
+$string['coderegex'] = 'Aspire code regex';
 $string['codesource'] = 'Aspire code source';
 $string['codetable'] = 'Aspire code table';
 $string['configaspireurl'] = 'Enter the URL of your Talis Aspire site.';
+$string['configcodecolumn'] = 'Optional. The name of the column in the custom table containing your Talis Aspire list codes';
+$string['configcoderegex'] = 'Optional. If using the course ID number as your code source, this is a regular expression ' .
+        'matching the Talis Aspire code portion of it.';
 $string['configcodesource'] = 'Select the source of your Talis Aspire list codes.';
+$string['configcodetable'] = 'Optional. The name of a custom table in the Moodle database containing your Talis Aspire list ' .
+        'codes mapped against a Moodle course attribute.';
+$string['configcourseattribute'] = 'Optional. The unique course attribute that is mapped against your Talis Aspire codes in ' .
+        'the custom table (normally id, idnumber or shortname).';
+$string['configcoursecolumn'] = 'Optional. The name of the column in the custom table containing the course attribute that is ' .
+        'mapped against your Talis Aspire list codes.';
 $string['configknowledgegroup'] = 'Select the target knowledge group for your Talis Aspire lists.';
 $string['configrequiremodintro'] = 'Enable this option if you want to force users to enter a description for each resource list.';
+$string['configyearregex'] = 'Optional. This is a regular expression matching the year code portion of your course ID numbers. ' .
+        'Can be used irrespective of the source of the Aspire list codes.';
 $string['contentheader'] = 'Resource list selection';
+$string['courseattribute'] = 'Course attribute';
+$string['coursecolumn'] = 'Course column';
 $string['display'] = 'Display resource list contents';
 $string['display_help'] = 'If you choose to display the resource list contents on a course page, there will be no link ' .
         'to a separate page. The description will be displayed only if "Display description on course page" is checked.' .
@@ -65,3 +80,4 @@ $string['requiremodintro'] = 'Require resource list description';
 $string['selectresources'] = 'Select resources from list <strong>{$a}</strong>';
 $string['subjects'] = 'Subjects';
 $string['units'] = 'Units';
+$string['yearregex'] = 'Year code regex';

@@ -50,4 +50,20 @@ if ($ADMIN->fulltree) {
     $optionscs['codetable'] = get_string('codetable', 'aspirelist');
     $settings->add(new admin_setting_configselect('aspirelist/codesource', get_string('codesource', 'aspirelist'),
             get_string('configcodesource', 'aspirelist'), 'idnumber', $optionscs));
+
+    // Code regexes.
+    $settings->add(new admin_setting_configtext('aspirelist/coderegex', get_string('coderegex', 'aspirelist'),
+            get_string('configcoderegex', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/yearregex', get_string('yearregex', 'aspirelist'),
+            get_string('configyearregex', 'aspirelist'), '', PARAM_TEXT));
+
+    // Code table details.
+    $settings->add(new admin_setting_configtext('aspirelist/codetable', get_string('codetable', 'aspirelist'),
+            get_string('configcodetable', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/codecolumn', get_string('codecolumn', 'aspirelist'),
+            get_string('configcodecolumn', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/coursecolumn', get_string('coursecolumn', 'aspirelist'),
+            get_string('configcoursecolumn', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/courseattribute', get_string('courseattribute', 'aspirelist'),
+            get_string('configcourseattribute', 'aspirelist'), '', PARAM_TEXT));
 }
