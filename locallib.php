@@ -332,12 +332,20 @@ class aspirelist {
      * @return stdClass the plugin config
      */
     private function get_admin_config() {
+        global $CFG;
+
         if ($this->adminconfig) {
             return $this->adminconfig;
         }
         $this->adminconfig = get_config('aspirelist');
-        
+
+        // Remove trailing slash from Aspire URL if present
         $this->adminconfig->aspireurl = rtrim($this->adminconfig->aspireurl, '/');
+
+        // Remove database prefix from Aspire code table name if present
+        if (isset($this->adminconfig->codetable)) {
+            $this->adminconfig->codetable = str_replace($CFG->prefix, '', $this->adminconfig->codetable);
+        }
 
         return $this->adminconfig;
     }
