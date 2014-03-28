@@ -380,12 +380,21 @@ class aspirelist {
         $adminconfig = $this->get_admin_config();
 
         if ($adminconfig->codesource === 'codetable') {
-            if (!$codes = $DB->get_records('block_aspirelists', array('courseid' => $course->id), null, 'id, taliscode')) {
+            $codetable = $adminconfig->codetable;
+            $codecolumn = $adminconfig->codecolumn;
+            $coursecolumn = $adminconfig->coursecolumn;
+            $courseattribute = $course->{$adminconfig->courseattribute};
+
+            if (!$codes = $DB->get_records($codetable, array($coursecolumn => $courseattribute), null, 'id, ' . $codecolumn)) {
                 return array();
             }
-            $codes = array_map(create_function('$code', 'return $code->taliscode;'), $codes);
+            $codes = array_map(create_function('$code', 'return $code->' . $codecolumn . ';'), $codes);
         } else {
-            $codes = array(strtolower($course->idnumber));
+            if ($coderegex = $adminconfig->coderegex) {
+                preg_match($coderegex, $course->idnumber, $codes);
+            } else {
+                $codes = array($course->idnumber);
+            }
         }
 
         return $codes;
@@ -402,18 +411,17 @@ class aspirelist {
         $codes = $this->get_codes($course);
 
         // Check if the course idnumber contains a year reference.
-        $year = explode('-', $course->idnumber);
-        if (count($year) > 2) {
-            $year = $year[2];
-        } else {
-            $year = false;
+        $year = false;
+        if ($yearregex = $adminconfig->yearregex) {
+            preg_match($yearregex, $course->idnumber, $year);
+            $year = $year[0];
         }
 
         $lists = array();
 
         foreach ($codes as $code) {
             // Build the URL for the JSON request.
-            $codedata = $adminconfig->aspireurl . '/' . $adminconfig->knowledgegroup . '/' . $code;
+            $codedata = $adminconfig->aspireurl . '/' . $adminconfig->knowledgegroup . '/' . strtolower($code);
             if ($year) {
                 $url = $codedata . '/lists/' . $year . '.json';
             } else {

@@ -35,7 +35,8 @@ $string['codetable'] = 'Aspire code table';
 $string['configaspireurl'] = 'Enter the URL of your Talis Aspire site.';
 $string['configcodecolumn'] = 'Optional. The name of the column in the custom table containing your Talis Aspire list codes';
 $string['configcoderegex'] = 'Optional. If using the course ID number as your code source, this is a regular expression ' .
-        'matching the Talis Aspire code portion of it.';
+        '(including delimiters) matching the Talis Aspire code part of it. If no regex is provided here it will be assumed ' .
+        'that the entire ID number is the Aspire code.';
 $string['configcodesource'] = 'Select the source of your Talis Aspire list codes.';
 $string['configcodetable'] = 'Optional. The name of a custom table in the Moodle database containing your Talis Aspire list ' .
         'codes mapped against a Moodle course attribute.';
@@ -45,8 +46,9 @@ $string['configcoursecolumn'] = 'Optional. The name of the column in the custom 
         'mapped against your Talis Aspire list codes.';
 $string['configknowledgegroup'] = 'Select the target knowledge group for your Talis Aspire lists.';
 $string['configrequiremodintro'] = 'Enable this option if you want to force users to enter a description for each resource list.';
-$string['configyearregex'] = 'Optional. This is a regular expression matching the year code portion of your course ID numbers. ' .
-        'Can be used irrespective of the source of the Aspire list codes.';
+$string['configyearregex'] = 'Optional. This is a regular expression (including delimiters) matching the year code part of ' .
+        'your course ID numbers, and can be used irrespective of the source of the Aspire list codes. If no regex is provided ' .
+        'here it will be assumed that there is no year code.';
 $string['contentheader'] = 'Resource list selection';
 $string['courseattribute'] = 'Course attribute';
 $string['coursecolumn'] = 'Course column';
