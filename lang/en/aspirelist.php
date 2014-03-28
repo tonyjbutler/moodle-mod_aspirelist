@@ -72,6 +72,7 @@ $string['neverseen'] = 'Never seen';
 $string['noaspirelists'] = 'Sorry, there are no resource lists associated with this module.';
 $string['noautocompletioninline'] = 'Automatic completion on viewing of activity can not be selected together with the ' .
         '"Display inline" option';
+$string['onlineresource'] = 'Online resource';
 $string['page-mod-aspirelist-view'] = 'Resource list module main page';
 $string['page-mod-aspirelist-x'] = 'Any resource list module page';
 $string['pluginadministration'] = 'Aspire resource list administration';

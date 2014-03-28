@@ -684,6 +684,19 @@ class aspirelist {
                 $item->studynote = '';
             }
 
+            $buttonquery = '../../div/div[contains(@class, "item-actions")]/div/div/p/a[contains(@class, "btnWebLink")]';
+            $webbutton = $this->get_dom_nodelist($xpath, $buttonquery, $itemdetails, true);
+            if ($webbutton) {
+                $buttonlabel = get_string('onlineresource', 'aspirelist');
+                $buttonhref = $webbutton->getAttribute('href');
+                $buttontitle = $item->name;
+                $buttonaction = new popup_action('click', $buttonhref, 'popup', array('width' => 1024, 'height' => 768));
+                $item->webbutton = $OUTPUT->action_link($buttonhref, $buttonlabel, $buttonaction,
+                        array('class' => 'webbutton', 'title' => $buttontitle));
+            } else {
+                $item->webbutton = '';
+            }
+
             return $item;
         } else {
             return null;
@@ -937,6 +950,7 @@ class aspirelist {
         $item = $this->get_item_data($list->xpath, null, $itemid);
 
         $html = html_writer::start_tag('li', array('class' => 'listitem'));
+        $html .= $item->webbutton;
         $html .= $item->link . $item->authors. $item->published . $item->formats;
         $html .= html_writer::empty_tag('br');
         $html .= $item->resourcetype . $item->importance . $item->studynote;

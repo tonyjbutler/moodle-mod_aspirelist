@@ -130,3 +130,41 @@ div.aspirelistbox ul.sectionitems li.listitem span.resourcetype {
 div.aspirelistbox ul.sectionitems li.listitem span.itemimportance {
     font-weight: bold;
 }
+
+#page-mod-aspirelist-view ul.sectionitems li.listitem a.webbutton, div.aspirelistbox ul.sectionitems li.listitem a.webbutton {
+    color: #FFF;
+    text-decoration: none;
+    text-shadow: 0 -0.1em 0 rgba(0,0,0, 0.25);
+    line-height: 1.6em;
+    background-color: #006DCC;
+    background-image: -moz-linear-gradient(top, #08C, #04C);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#08C), to(#04C));
+    background-image: -webkit-linear-gradient(top, #08C, #04C);
+    background-image: -o-linear-gradient(top, #08C, #04C);
+    background-image: linear-gradient(to bottom, #08C, #04C);
+    background-repeat: repeat-x;
+    margin: 0.2em 0.2em 0 0.4em;
+    padding: 0.2em 0.8em;
+    float: right;
+    border: 0.1em solid #CCC;
+    border-color: #04C #04C #002A80;
+    border-color: rgba(0,0,0, 0.1) rgba(0,0,0, 0.1) rgba(0,0,0, 0.25);
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0088CC', endColorstr='#FF0044CC', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    -webkit-box-shadow: inset 0 0.1em 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
+    -moz-box-shadow: inset 0 0.1em 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
+    box-shadow: inset 0 0.1em 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
+}
+
+#page-mod-aspirelist-view ul.sectionitems li.listitem a.webbutton:active,
+#page-mod-aspirelist-view ul.sectionitems li.listitem a.webbutton:hover,
+#page-mod-aspirelist-view ul.sectionitems li.listitem a.webbutton:focus,
+div.aspirelistbox ul.sectionitems li.listitem a.webbutton:active,
+div.aspirelistbox ul.sectionitems li.listitem a.webbutton:hover,
+div.aspirelistbox ul.sectionitems li.listitem a.webbutton:focus {
+    background-color: #04C;
+    background-image: none;
+}
