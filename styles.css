@@ -98,9 +98,9 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
     line-height: 1.4em;
     background-image:  url('../mod/aspirelist/pix/bullet.png');
     background-repeat: no-repeat;
-    background-position: 0 0.6em;
+    background-position: 0.2em 0.4em;
     margin: 0;
-    padding: 0.4em 0 0.4em 2.4em;
+    padding: 0.4em 0 0.4em 2em;
     border-bottom: 0.1em solid #C0C0C0;
 }
 
