@@ -91,6 +91,7 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
 }
 
 #page-mod-aspirelist-view ul.sectionitems, div.aspirelistbox ul.sectionitems {
+    margin-left: 1em;
     list-style-type: none;
 }
 
