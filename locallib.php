@@ -612,6 +612,7 @@ class aspirelist {
     public function get_item_data($xpath, $itemnode = null, $itemid = null, $parentpath = null) {
         global $OUTPUT;
 
+        $adminconfig = $this->get_admin_config();
         $item = new stdClass();
 
         $item->id = $itemid ? $itemid : $itemnode->getAttribute('id');
@@ -688,7 +689,7 @@ class aspirelist {
             $webbutton = $this->get_dom_nodelist($xpath, $buttonquery, $itemdetails, true);
             if ($webbutton) {
                 $buttonlabel = get_string('onlineresource', 'aspirelist');
-                $buttonhref = $webbutton->getAttribute('href');
+                $buttonhref = $adminconfig->aspireurl . '/' . $webbutton->getAttribute('href');
                 $buttontitle = $item->name;
                 $buttonaction = new popup_action('click', $buttonhref, 'popup', array('width' => 1024, 'height' => 768));
                 $item->webbutton = $OUTPUT->action_link($buttonhref, $buttonlabel, $buttonaction,
@@ -770,8 +771,6 @@ class aspirelist {
      * @return string The final HTML output to display the custom resource list
      */
     public function get_list_html($itemslist) {
-        global $OUTPUT;
-
         $html = '';
 
         $items = explode(',', $itemslist);
@@ -788,7 +787,6 @@ class aspirelist {
         foreach ($lists as $list) {
             $listid = substr($list, 5);
             $listdata = $this->get_list_data($listid);
-//            $html .= $OUTPUT->heading($listdata->name, 2, 'listheading', 'list-' . $listdata->id);
 
             $subtree = $tree[$list];
             $html .= $this->print_section($listdata, $subtree);
