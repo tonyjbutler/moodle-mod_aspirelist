@@ -773,25 +773,27 @@ class aspirelist {
     public function get_list_html($itemslist) {
         $html = '';
 
-        $items = explode(',', $itemslist);
-        $tree = array();
+        if (!empty($itemslist)) {
+            $items = explode(',', $itemslist);
+            $tree = array();
 
-        foreach ($items as $item) {
-            $path = $this->get_item_path($item);
-            $tree = array_merge_recursive($tree, $path);
+            foreach ($items as $item) {
+                $path = $this->get_item_path($item);
+                $tree = array_merge_recursive($tree, $path);
+            }
+            unset($items);
+
+            $lists = array_keys($tree);
+
+            foreach ($lists as $list) {
+                $listid = substr($list, 5);
+                $listdata = $this->get_list_data($listid);
+
+                $subtree = $tree[$list];
+                $html .= $this->print_section($listdata, $subtree);
+            }
+            unset($lists);
         }
-        unset($items);
-
-        $lists = array_keys($tree);
-
-        foreach ($lists as $list) {
-            $listid = substr($list, 5);
-            $listdata = $this->get_list_data($listid);
-
-            $subtree = $tree[$list];
-            $html .= $this->print_section($listdata, $subtree);
-        }
-        unset($lists);
 
         return $this->condense_whitespace($html);
     }
