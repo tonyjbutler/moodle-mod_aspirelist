@@ -64,6 +64,7 @@
 
 #page-mod-aspirelist-mod .mform #id_content .fitem .fsubmit a {
     font-size: 0.85em;
+    font-weight: bold;
     color: #FFF;
     text-decoration: none;
     text-shadow: 0 -0.1em 0 rgba(0,0,0, 0.25);
@@ -150,6 +151,7 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
 #page-mod-aspirelist-view ul.sectionitems li.listitem span.resourcetype,
 div.aspirelistbox ul.sectionitems li.listitem span.resourcetype {
     font-size: 0.85em;
+    font-weight: bold;
     color: #FFF;
     text-shadow: 0 -0.1em 0 rgba(0,0,0, 0.25);
     background-color: #999;
