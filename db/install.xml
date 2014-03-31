@@ -14,7 +14,6 @@
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="display" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Display type of Aspirelist contents - on a separate page or inline"/>
         <FIELD NAME="items" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="Comma separated list of selected resource items"/>
-        <FIELD NAME="html" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="HTML rendering of resource list selection"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

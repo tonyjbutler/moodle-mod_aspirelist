@@ -98,10 +98,7 @@ function aspirelist_add_instance($data, $mform) {
     $aspirelist = new aspirelist(context_module::instance($cmid), null, null);
 
     $data->timemodified = time();
-
     $data->items = $aspirelist->get_items_list($data);
-    $data->html = $aspirelist->get_list_html($data->items);
-
     $data->id = $DB->insert_record('aspirelist', $data);
 
     $DB->set_field('course_modules', 'instance', $data->id, array('id'=>$cmid));
@@ -123,9 +120,7 @@ function aspirelist_update_instance($data, $mform) {
 
     $data->id = $data->instance;
     $data->timemodified = time();
-
     $data->items = $aspirelist->get_items_list($data);
-    $data->html = $aspirelist->get_list_html($data->items);
 
     $DB->update_record('aspirelist', $data);
 
@@ -227,7 +222,7 @@ function aspirelist_page_type_list($pagetype, $parentcontext, $currentcontext) {
 function aspirelist_get_coursemodule_info($cm) {
     global $DB;
     if (!($aspirelist = $DB->get_record('aspirelist', array('id' => $cm->instance),
-            'id, name, intro, introformat, display, html'))) {
+            'id, name, intro, introformat, display, items'))) {
         return null;
     }
     $cminfo = new cached_cm_info();
@@ -241,7 +236,7 @@ function aspirelist_get_coursemodule_info($cm) {
                 $fdata->introformat = $aspirelist->introformat;
             }
         }
-        $fdata->html = $aspirelist->html;
+        $fdata->items = $aspirelist->items;
         $cminfo->customdata = $fdata;
     } else {
         if ($cm->showdescription) {

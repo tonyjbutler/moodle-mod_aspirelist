@@ -37,7 +37,7 @@ class backup_aspirelist_activity_structure_step extends backup_activity_structur
 
         // Define each element separated
         $aspirelist = new backup_nested_element('aspirelist', array('id'), array('name', 'intro', 'introformat',
-            'timemodified', 'display', 'items', 'html'));
+            'timemodified', 'display', 'items'));
 
         // Build the tree
         // (nice mono-tree, lol)

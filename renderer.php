@@ -54,17 +54,41 @@ class mod_aspirelist_renderer extends plugin_renderer_base {
             }
         }
 
+        $resourcelist = new resource_list($aspirelist, $cm);
         if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
             $listid = $cm->modname . '-' . $cm->id;
             $viewlink = (string) $cm->url;
 
             // YUI function to hide inline resource list until user clicks 'view' link.
             $this->page->requires->js_init_call('M.mod_aspirelist.init_list', array('#' . $listid, $viewlink));
-            $output .= $this->output->box($aspirelist->html, 'generalbox aspirelistbox', $listid);
+            $output .= $this->output->box($this->render($resourcelist), 'generalbox aspirelistbox', $listid);
         } else {
-            $output .= $this->output->box($aspirelist->html, 'generalbox', 'aspirelist');
+            $output .= $this->output->box($this->render($resourcelist), 'generalbox', 'aspirelist');
         }
 
         return $output;
+    }
+
+    public function render_resource_list(resource_list $list) {
+        global $CFG;
+
+        require_once($CFG->dirroot . '/mod/aspirelist/locallib.php');
+
+        $aspirelist = new aspirelist($list->context, $list->cm, null);
+        $output = $aspirelist->get_list_html($list->aspirelist->items);
+
+        return $output;
+    }
+}
+
+class resource_list implements renderable {
+    public $context;
+    public $aspirelist;
+    public $cm;
+
+    public function __construct($aspirelist, $cm) {
+        $this->aspirelist = $aspirelist;
+        $this->cm = $cm;
+        $this->context = context_module::instance($cm->id);
     }
 }
