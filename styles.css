@@ -125,7 +125,7 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem, div.aspirelistbox ul.sectionitems li.listitem {
-    line-height: 1.4em;
+    line-height: 1.5em;
     background-image:  url('../mod/aspirelist/pix/bullet.png');
     background-repeat: no-repeat;
     background-position: 0.2em 0.4em;
