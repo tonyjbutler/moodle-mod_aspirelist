@@ -67,19 +67,19 @@
 	font-weight: bold;
 	color: #777;
 	text-decoration: none;
-	text-shadow: 0 0.1em 0 #FFF;
+	text-shadow: 0 1px 0 #FFF;
 	background-color: #EDEDED;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #EDEDED), color-stop(1, #DFDFDF));
 	background: -moz-linear-gradient(center top, #EDEDED 5%, #DFDFDF 100%);
 	display: inline-block;
-    padding: 0.2em 0.4em;
-	border: 0.1em solid #DCDCDC;
-	-webkit-border-radius: 0.3em;
-	-moz-border-radius: 0.3em;
-	border-radius: 0.3em;
-	-moz-box-shadow: inset 0 0.1em 0 0 #FFF;
-	-webkit-box-shadow: inset 0 0.1em 0 0 #FFF;
-	box-shadow: inset 0 0.1em 0 0 #FFF;
+    padding: 3px 6px;
+	border: 1px solid #DCDCDC;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: inset 0 1px 0 0 #FFF;
+	-webkit-box-shadow: inset 0 1px 0 0 #FFF;
+	box-shadow: inset 0 1px 0 0 #FFF;
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDEDED', endColorstr='#DFDFDF');
 }
 
@@ -128,10 +128,10 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
     line-height: 1.5em;
     background-image:  url('../mod/aspirelist/pix/bullet.png');
     background-repeat: no-repeat;
-    background-position: 0.2em 0.4em;
+    background-position: 4px 6px;
     margin: 0;
-    padding: 0.4em 0 0.4em 2em;
-    border-bottom: 0.1em solid #C0C0C0;
+    padding: 6px 0 6px 28px;
+    border-bottom: 1px solid #C0C0C0;
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem:last-child, div.aspirelistbox ul.sectionitems li.listitem:last-child {
@@ -139,7 +139,7 @@ div.aspirelistbox h6.sectionheading + div.sectionnote {
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem + li.listitem, div.aspirelistbox ul.sectionitems li.listitem + li.listitem {
-    border-top: 0.1em solid #FFF;
+    border-top: 1px solid #FFF;
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem span.resourcetype,
@@ -147,13 +147,13 @@ div.aspirelistbox ul.sectionitems li.listitem span.resourcetype {
     font-size: 0.85em;
     font-weight: bold;
     color: #FFF;
-    text-shadow: 0 -0.1em 0 rgba(0,0,0, 0.25);
+    text-shadow: 0 1px 0 rgba(0,0,0, 0.25);
     background-color: #999;
-    padding: 0.2em 0.4em;
+    padding: 3px 6px;
     vertical-align: bottom;
-    -webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-    border-radius: 0.3em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem span.itemimportance,
@@ -164,7 +164,7 @@ div.aspirelistbox ul.sectionitems li.listitem span.itemimportance {
 #page-mod-aspirelist-view ul.sectionitems li.listitem a.webbutton, div.aspirelistbox ul.sectionitems li.listitem a.webbutton {
     color: #FFF;
     text-decoration: none;
-    text-shadow: 0 -0.1em 0 rgba(0,0,0, 0.25);
+    text-shadow: 0 -1px 0 rgba(0,0,0, 0.25);
     line-height: 1.6em;
     background-color: #006DCC;
     background-image: -moz-linear-gradient(top, #08C, #04C);
@@ -173,18 +173,18 @@ div.aspirelistbox ul.sectionitems li.listitem span.itemimportance {
     background-image: -o-linear-gradient(top, #08C, #04C);
     background-image: linear-gradient(to bottom, #08C, #04C);
     background-repeat: repeat-x;
-    margin: 0.2em 0.2em 0 0.4em;
-    padding: 0.2em 0.6em;
+    margin: 4px 4px 0 8px;
+    padding: 3px 9px;
     float: right;
-    border: 0.1em solid #CCC;
+    border: 1px solid #CCC;
     border-color: #04C #04C #002A80;
     border-color: rgba(0,0,0, 0.1) rgba(0,0,0, 0.1) rgba(0,0,0, 0.25);
-    -webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-    border-radius: 0.3em;
-    -webkit-box-shadow: inset 0 0.1em 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
-    -moz-box-shadow: inset 0 0.1em 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
-    box-shadow: inset 0 0.1em 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255,255,255, 0.2), 0 1px 2px rgba(0,0,0, 0.05);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF0088CC', endColorstr='#FF0044CC', GradientType=0);
     filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
 }
