@@ -53,18 +53,19 @@ $string['contentheader'] = 'Resource list selection';
 $string['courseattribute'] = 'Course attribute';
 $string['coursecolumn'] = 'Course column';
 $string['display'] = 'Display resource list contents';
-$string['display_help'] = 'If you choose to display the resource list contents on a course page, there will be no link ' .
-        'to a separate page. The description will be displayed only if "Display description on course page" is checked.' .
-        '<br />Also note that participants\' view actions cannot be logged in this case.';
+$string['display_help'] = '<p>If you choose to display the resource list contents on the course page, there will be no link ' .
+        'to a separate page. The description will be displayed only if "Display description on course page" is checked.</p>' .
+        '<p>Also note that participants\' view actions cannot be logged in this case.</p>';
 $string['displayinline'] = 'Inline on the course page';
 $string['displaypage'] = 'On a separate page';
 $string['itemcount'] = '{$a} item';
 $string['itemcountplural'] = '{$a} items';
 $string['knowledgegroup'] = 'Aspire knowledge group';
 $string['modulename'] = 'Aspire resource list';
-$string['modulename_help'] = 'The Aspire resource list module enables a teacher to include a selection of ' .
-        'resources from any associated Talis Aspire resource lists directly within the content of their course.' .
-        '<br /><br />The resource list can be displayed either as a link, or embedded in the course page itself.';
+$string['modulename_help'] = '<p>The Aspire resource list module enables a teacher to include a selection of ' .
+        'resources from associated Talis Aspire resource lists directly within the content of their course.</p>' .
+        '<p>The resource list can be displayed either in a separate, linked page, or embedded in the course page ' .
+        'itself (hidden initially, with a link to toggle visibility).</p>';
 $string['modulename_link'] = 'mod/aspirelist/view';
 $string['modulenameplural'] = 'Aspire resource lists';
 $string['modules'] = 'Modules';
