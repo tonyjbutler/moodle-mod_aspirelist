@@ -83,6 +83,7 @@ $string['previewitem'] = 'Preview item';
 $string['programmes'] = 'Programmes';
 $string['requiremodintro'] = 'Require resource list description';
 $string['selectresources'] = 'Select resources from list <strong>{$a}</strong>';
+$string['showhide'] = '(show/hide)';
 $string['subjects'] = 'Subjects';
 $string['units'] = 'Units';
 $string['yearregex'] = 'Year code regex';
