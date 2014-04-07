@@ -45,7 +45,7 @@ class mod_aspirelist_mod_form extends moodleform_mod {
      * @return void
      */
     public function definition() {
-        global $CFG, $DB;
+        global $CFG, $DB, $OUTPUT;
         $mform = $this->_form;
 
         $ctx = null;
@@ -82,7 +82,19 @@ class mod_aspirelist_mod_form extends moodleform_mod {
         $mform->addElement('header', 'content', get_string('contentheader', 'aspirelist'));
         $mform->setExpanded('content', true);
 
-        $this->setup_list_elements($mform);
+        if ($this->aspirelist->test_connection()) {
+            if ($lists = $this->aspirelist->get_lists($course)) {
+                $this->setup_list_elements($mform, $lists);
+            } else {
+                $adminconfig = $this->aspirelist->get_admin_config();
+                $module = rtrim(strtolower($adminconfig->knowledgegroup), 's');
+                $noaspirelists = $OUTPUT->heading(get_string('noaspirelists', 'aspirelist', $module), 3, 'warning');
+                $mform->addElement('html', $noaspirelists);
+            }
+        } else {
+            $noconnection = $OUTPUT->heading(get_string('noconnection', 'aspirelist'), 3, 'warning');
+            $mform->addElement('html', $noconnection);
+        }
 
         //-------------------------------------------------------
         $mform->addElement('header', 'appearance', get_string('appearance'));
@@ -100,36 +112,29 @@ class mod_aspirelist_mod_form extends moodleform_mod {
         $this->add_action_buttons();
     }
 
-    private function setup_list_elements(&$mform) {
-        global $COURSE, $OUTPUT;
-
-        $course = $COURSE;
+    private function setup_list_elements(&$mform, $lists) {
         $checkboxgrp = 1;
 
-        if ($lists = $this->aspirelist->get_lists($course)) {
-            foreach ($lists as $list) {
-                $selectresources = html_writer::div(get_string('selectresources', 'aspirelist', $list->name), 'selectresources');
-                $mform->addElement('html', $selectresources);
+        foreach ($lists as $list) {
+            $selectresources = html_writer::div(get_string('selectresources', 'aspirelist', $list->name), 'selectresources');
+            $mform->addElement('html', $selectresources);
 
-                // Get DOM node list for top level sections.
-                $sectionnodes = $this->aspirelist->get_section_nodes($list->xpath);
-                foreach ($sectionnodes as $sectionnode) {
-                    $section = $this->aspirelist->get_section_data($list->xpath, $sectionnode, null, 'list-' . $list->id, true);
-                    $this->setup_section_elements($mform, $checkboxgrp, $list->xpath, $section);
-                }
-                unset($sectionnodes);
+            // Get DOM node list for top level sections.
+            $sectionnodes = $this->aspirelist->get_section_nodes($list->xpath);
+            foreach ($sectionnodes as $sectionnode) {
+                $section = $this->aspirelist->get_section_data($list->xpath, $sectionnode, null, 'list-' . $list->id, true);
+                $this->setup_section_elements($mform, $checkboxgrp, $list->xpath, $section);
             }
-            unset($lists);
-        } else {
-            $noaspirelists = $OUTPUT->heading(get_string('noaspirelists', 'aspirelist'), 3, 'warning');
-            $mform->addElement('html', $noaspirelists);
+            unset($sectionnodes);
         }
+        unset($lists);
     }
 
     private function setup_section_elements(&$mform, &$checkboxgrp, $xpath, $section, $headinglevel = 3) {
         global $OUTPUT;
 
-        $heading = $OUTPUT->heading($section->name . ' ' . $section->countspan, $headinglevel, 'sectionheading', $section->id);
+        $countspan = html_writer::tag('span', $section->itemcount, array('class' => 'itemcount dimmed_text'));
+        $heading = $OUTPUT->heading($section->name . ' ' . $countspan, $headinglevel, 'sectionheading', $section->id);
         $mform->addElement('html', $heading . $section->note);
 
         // Don't let heading level exceed 6.

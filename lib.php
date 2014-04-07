@@ -221,6 +221,7 @@ function aspirelist_page_type_list($pagetype, $parentcontext, $currentcontext) {
  */
 function aspirelist_get_coursemodule_info($cm) {
     global $DB;
+
     if (!($aspirelist = $DB->get_record('aspirelist', array('id' => $cm->instance),
             'id, name, intro, introformat, display, items'))) {
         return null;
@@ -270,6 +271,7 @@ function aspirelist_cm_info_dynamic(cm_info $cm) {
  */
 function aspirelist_cm_info_view(cm_info $cm) {
     global $PAGE;
+
     if ($cm->uservisible && $cm->customdata && has_capability('mod/aspirelist:view', $cm->context)) {
         // Restore aspirelist object from customdata.
         // Note the field 'customdata' is not empty IF AND ONLY IF we display contents inline.

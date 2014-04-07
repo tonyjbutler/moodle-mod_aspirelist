@@ -115,6 +115,7 @@ class aspirelist {
      */
     public function register_return_link($action, $params) {
         global $PAGE;
+
         $params['action'] = $action;
         $currenturl = $PAGE->url;
 
@@ -241,11 +242,7 @@ class aspirelist {
         }
 
         if ($this->context->contextlevel == CONTEXT_MODULE) {
-            $this->coursemodule = get_coursemodule_from_id('aspirelist',
-                                                           $this->context->instanceid,
-                                                           0,
-                                                           false,
-                                                           MUST_EXIST);
+            $this->coursemodule = get_coursemodule_from_id('aspirelist', $this->context->instanceid, 0, false, MUST_EXIST);
             return $this->coursemodule;
         }
         return null;
@@ -331,7 +328,7 @@ class aspirelist {
      *
      * @return stdClass the plugin config
      */
-    private function get_admin_config() {
+    public function get_admin_config() {
         global $CFG;
 
         if ($this->adminconfig) {
@@ -348,6 +345,23 @@ class aspirelist {
         }
 
         return $this->adminconfig;
+    }
+
+    /**
+     * Check that we can connect to the Talis Aspire server.
+     *
+     * @return boolean True if we can connect, else false
+     */
+    public function test_connection() {
+        $adminconfig = $this->get_admin_config();
+        $aspirehost = ltrim($adminconfig->aspireurl, 'http://');
+
+        if ($connection = @fsockopen($aspirehost, 80)) {
+            return true;
+            fclose($connection);
+        }
+
+        return false;
     }
 
     /**
@@ -413,8 +427,9 @@ class aspirelist {
         // Check if the course idnumber contains a year reference.
         $year = false;
         if ($yearregex = $adminconfig->yearregex) {
-            preg_match($yearregex, $course->idnumber, $year);
-            $year = $year[0];
+            if (preg_match($yearregex, $course->idnumber, $year)) {
+                $year = $year[0];
+            }
         }
 
         $lists = array();
@@ -501,21 +516,25 @@ class aspirelist {
      * @return mixed DOMNodeList|DOMNode|string|null An object containing the DOM node(s), or a string value
      */
     private function get_dom_nodelist($xpath, $query, $contextnode = null, $singlenode = false, $nodevalue = false) {
-        $nodelist = $xpath->query($query, $contextnode);
+        if ($xpath) {
+            $nodelist = $xpath->query($query, $contextnode);
 
-        if ($singlenode) {
-            if ($nodelist->length == 1) {
-                if ($nodevalue) {
-                    return $nodelist->item(0)->nodeValue;
+            if ($singlenode) {
+                if ($nodelist->length == 1) {
+                    if ($nodevalue) {
+                        return $nodelist->item(0)->nodeValue;
+                    } else {
+                        return $nodelist->item(0);
+                    }
                 } else {
-                    return $nodelist->item(0);
+                    return null;
                 }
             } else {
-                return null;
+                return $nodelist;
             }
-        } else {
-            return $nodelist;
         }
+
+        return null;
     }
 
     /**
@@ -574,29 +593,32 @@ class aspirelist {
         }
 
         $detailsquery = 'div[contains(@class, "sectionDetails")]/div';
-        $sectiondetails = $this->get_dom_nodelist($xpath, $detailsquery, $sectionnode, true);
 
-        $namequery = 'span[contains(@class, "name")]';
-        $section->name = trim($this->get_dom_nodelist($xpath, $namequery, $sectiondetails, true, true));
+        if ($sectiondetails = $this->get_dom_nodelist($xpath, $detailsquery, $sectionnode, true)) {
 
-        $countquery = 'span[contains(@class, "itemCount")]';
-        $section->itemcount = $this->get_dom_nodelist($xpath, $countquery, $sectiondetails, true, true);
-        $section->countspan = html_writer::tag('span', $section->itemcount, array('class' => 'itemcount dimmed_text'));
+            $namequery = 'span[contains(@class, "name")]';
+            $section->name = trim($this->get_dom_nodelist($xpath, $namequery, $sectiondetails, true, true));
 
-        $notequery = 'div[contains(@class, "sectionNote")]';
-        $sectionnote = $this->get_dom_nodelist($xpath, $notequery, $sectionnode, true, true);
-        if ($sectionnote) {
-            $section->note = html_writer::div($sectionnote, 'sectionnote');
-        } else {
-            $section->note = '';
+            $countquery = 'span[contains(@class, "itemCount")]';
+            $section->itemcount = $this->get_dom_nodelist($xpath, $countquery, $sectiondetails, true, true);
+
+            $notequery = 'div[contains(@class, "sectionNote")]';
+            $sectionnote = $this->get_dom_nodelist($xpath, $notequery, $sectionnode, true, true);
+            if ($sectionnote) {
+                $section->note = html_writer::div($sectionnote, 'sectionnote');
+            } else {
+                $section->note = '';
+            }
+
+            if ($getitems) {
+                $itemsquery = 'ol[contains(@class, "sectionItems")]/li';
+                $section->items = $this->get_dom_nodelist($xpath, $itemsquery, $sectionnode);
+            }
+
+            return $section;
         }
 
-        if ($getitems) {
-            $itemsquery = 'ol[contains(@class, "sectionItems")]/li';
-            $section->items = $this->get_dom_nodelist($xpath, $itemsquery, $sectionnode);
-        }
-
-        return $section;
+        return null;
     }
 
     /**
@@ -627,9 +649,8 @@ class aspirelist {
         }
 
         $detailsquery = 'div[contains(@class, "outlineItem")]/div/div/p[contains(@class, "itemBibData")]';
-        $itemdetails = $this->get_dom_nodelist($xpath, $detailsquery, $itemnode, true);
 
-        if ($itemdetails) {
+        if ($itemdetails = $this->get_dom_nodelist($xpath, $detailsquery, $itemnode, true)) {
             $linkquery = 'a[contains(@class, "itemLink")]';
             $link = $this->get_dom_nodelist($xpath, $linkquery, $itemdetails, true);
             $item->name = $link->nodeValue;
@@ -699,9 +720,9 @@ class aspirelist {
             }
 
             return $item;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     /**
@@ -771,31 +792,37 @@ class aspirelist {
      * @return string The final HTML output to display the custom resource list
      */
     public function get_list_html($itemslist) {
-        $html = '';
+        global $OUTPUT;
 
-        if (!empty($itemslist)) {
-            $items = explode(',', $itemslist);
-            $tree = array();
+        if ($this->test_connection()) {
+            $html = '';
 
-            foreach ($items as $item) {
-                $path = $this->get_item_path($item);
-                $tree = array_merge_recursive($tree, $path);
+            if (!empty($itemslist)) {
+                $items = explode(',', $itemslist);
+                $tree = array();
+
+                foreach ($items as $item) {
+                    $path = $this->get_item_path($item);
+                    $tree = array_merge_recursive($tree, $path);
+                }
+                unset($items);
+
+                $lists = array_keys($tree);
+
+                foreach ($lists as $list) {
+                    $listid = substr($list, 5);
+                    $listdata = $this->get_list_data($listid);
+
+                    $subtree = $tree[$list];
+                    $html .= $this->print_section($listdata, $subtree);
+                }
+                unset($lists);
             }
-            unset($items);
 
-            $lists = array_keys($tree);
-
-            foreach ($lists as $list) {
-                $listid = substr($list, 5);
-                $listdata = $this->get_list_data($listid);
-
-                $subtree = $tree[$list];
-                $html .= $this->print_section($listdata, $subtree);
-            }
-            unset($lists);
+            return $this->condense_whitespace($html);
         }
 
-        return $this->condense_whitespace($html);
+        return $OUTPUT->heading(get_string('noconnection', 'aspirelist'), 3, 'warning');
     }
 
     /**
@@ -923,20 +950,22 @@ class aspirelist {
     private function get_section_html($list, $sectionid, $itemcount, $headinglevel) {
         global $OUTPUT;
 
-        $section = $this->get_section_data($list->xpath, null, $sectionid);
+        if ($section = $this->get_section_data($list->xpath, null, $sectionid)) {
+            if ($itemcount > 0) {
+                $plural = $itemcount > 1 ? 'plural' : '';
+                $itemcount = ' ' . get_string('itemcount' . $plural, 'aspirelist', $itemcount);
+                $countspan = html_writer::tag('span', $itemcount, array('class' => 'itemcount dimmed_text'));
+            } else {
+                $countspan = '';
+            }
 
-        if ($itemcount > 0) {
-            $plural = $itemcount > 1 ? 'plural' : '';
-            $itemcount = ' ' . get_string('itemcount' . $plural, 'aspirelist', $itemcount);
-            $countspan = html_writer::tag('span', $itemcount, array('class' => 'itemcount dimmed_text'));
-        } else {
-            $countspan = '';
+            $heading = $OUTPUT->heading($section->name . $countspan, $headinglevel, 'sectionheading', $section->id);
+            $html = $heading . $section->note;
+
+            return $html;
         }
 
-        $heading = $OUTPUT->heading($section->name . $countspan, $headinglevel, 'sectionheading', $section->id);
-        $html = $heading . $section->note;
-
-        return $html;
+        return '';
     }
 
     /**
@@ -947,16 +976,18 @@ class aspirelist {
      * @return string An HTML list element containing the resource item link and details
      */
     private function get_item_html($list, $itemid) {
-        $item = $this->get_item_data($list->xpath, null, $itemid);
+        if ($item = $this->get_item_data($list->xpath, null, $itemid)) {
+            $html = html_writer::start_tag('li', array('class' => 'listitem'));
+            $html .= $item->webbutton;
+            $html .= $item->link . $item->authors. $item->published . $item->formats;
+            $html .= html_writer::empty_tag('br');
+            $html .= $item->resourcetype . $item->importance . $item->studynote;
+            $html .= html_writer::end_tag('li');
 
-        $html = html_writer::start_tag('li', array('class' => 'listitem'));
-        $html .= $item->webbutton;
-        $html .= $item->link . $item->authors. $item->published . $item->formats;
-        $html .= html_writer::empty_tag('br');
-        $html .= $item->resourcetype . $item->importance . $item->studynote;
-        $html .= html_writer::end_tag('li');
+            return $html;
+        }
 
-        return $html;
+        return '';
     }
 
     /**
