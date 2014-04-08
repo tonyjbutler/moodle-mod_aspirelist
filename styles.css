@@ -195,3 +195,7 @@ div.aspirelistbox ul.sectionitems li.listitem a.webbutton:hover {
     background-color: #04C;
     background-image: none;
 }
+
+.showhidehint {
+    font-size: 0.85em;
+}
