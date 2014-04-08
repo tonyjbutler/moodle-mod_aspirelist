@@ -25,6 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+require_once($CFG->dirroot . '/mod/aspirelist/adminlib.php');
+
 if ($ADMIN->fulltree) {
     // General settings.
     $settings->add(new admin_setting_configcheckbox('aspirelist/requiremodintro', get_string('requiremodintro', 'aspirelist'),
@@ -32,7 +34,7 @@ if ($ADMIN->fulltree) {
 
     // Talis Aspire URL.
     $settings->add(new admin_setting_configtext('aspirelist/aspireurl', get_string('aspireurl', 'aspirelist'),
-            get_string('configaspireurl', 'aspirelist'), '', PARAM_URL));
+            get_string('configaspireurl', 'aspirelist'), 'http://', PARAM_URL));
 
     // Knowledge group.
     $optionskg = array();
@@ -48,7 +50,7 @@ if ($ADMIN->fulltree) {
     $optionscs = array();
     $optionscs['idnumber'] = get_string('idnumbercourse');
     $optionscs['codetable'] = get_string('codetable', 'aspirelist');
-    $settings->add(new admin_setting_configselect('aspirelist/codesource', get_string('codesource', 'aspirelist'),
+    $settings->add(new aspirelist_codesource_setting('aspirelist/codesource', get_string('codesource', 'aspirelist'),
             get_string('configcodesource', 'aspirelist'), 'idnumber', $optionscs));
 
     // Code regexes.
@@ -58,12 +60,12 @@ if ($ADMIN->fulltree) {
             get_string('configyearregex', 'aspirelist'), '', PARAM_TEXT));
 
     // Code table details.
-    $settings->add(new admin_setting_configtext('aspirelist/codetable', get_string('codetable', 'aspirelist'),
+    $settings->add(new aspirelist_codetable_setting('aspirelist/codetable', get_string('codetable', 'aspirelist'),
             get_string('configcodetable', 'aspirelist'), '', PARAM_TEXT));
-    $settings->add(new admin_setting_configtext('aspirelist/codecolumn', get_string('codecolumn', 'aspirelist'),
+    $settings->add(new aspirelist_codecolumn_setting('aspirelist/codecolumn', get_string('codecolumn', 'aspirelist'),
             get_string('configcodecolumn', 'aspirelist'), '', PARAM_TEXT));
-    $settings->add(new admin_setting_configtext('aspirelist/coursecolumn', get_string('coursecolumn', 'aspirelist'),
+    $settings->add(new aspirelist_coursecolumn_setting('aspirelist/coursecolumn', get_string('coursecolumn', 'aspirelist'),
             get_string('configcoursecolumn', 'aspirelist'), '', PARAM_TEXT));
-    $settings->add(new admin_setting_configtext('aspirelist/courseattribute', get_string('courseattribute', 'aspirelist'),
-            get_string('configcourseattribute', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new aspirelist_courseattribute_setting('aspirelist/courseattribute',
+            get_string('courseattribute', 'aspirelist'), get_string('configcourseattribute', 'aspirelist'), '', PARAM_TEXT));
 }

@@ -58,6 +58,16 @@ $string['display_help'] = '<p>If you choose to display the resource list content
         '<p>Also note that participants\' view actions cannot be logged in this case.</p>';
 $string['displayinline'] = 'Inline on the course page';
 $string['displaypage'] = 'On a separate page';
+$string['errorcodecolumn'] = 'You must specify the code column if you want to use a custom database table as your Aspire code ' .
+        'source.';
+$string['errorcodesource'] = 'You must provide all the table and column details below if you want to use a custom database ' .
+        'table as your Aspire code source.';
+$string['errorcodetable'] = 'You must specify the table name if you want to use a custom database table as your Aspire code ' .
+        'source.';
+$string['errorcourseattribute'] = 'You must specify a course attribute if you want to use a custom database table as your ' .
+        'Aspire code source.';
+$string['errorcoursecolumn'] = 'You must specify the course column if you want to use a custom database table as your Aspire ' .
+        'code source.';
 $string['itemcount'] = '{$a} item';
 $string['itemcountplural'] = '{$a} items';
 $string['knowledgegroup'] = 'Aspire knowledge group';
