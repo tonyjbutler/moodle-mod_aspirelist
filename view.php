@@ -48,7 +48,13 @@ if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
     redirect(course_get_url($aspirelist->course, $cm->sectionnum));
 }
 
-add_to_log($course->id, 'aspirelist', 'view', 'view.php?id=' . $cm->id, $aspirelist->id, $cm->id);
+$params = array(
+    'context' => $context,
+    'objectid' => $aspirelist->id
+);
+$event = \mod_aspirelist\event\course_module_viewed::create($params);
+$event->add_record_snapshot('aspirelist', $aspirelist);
+$event->trigger();
 
 // Update 'viewed' state if required by completion system.
 $completion = new completion_info($course);
