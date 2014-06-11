@@ -356,10 +356,11 @@ class aspirelist {
         $adminconfig = $this->get_admin_config();
         $aspirehost = ltrim($adminconfig->aspireurl, 'http://');
 
-        if ($connection = @fsockopen($aspirehost, 80)) {
-            return true;
+        if ($connection = @fsockopen($aspirehost, 80, $errno, $errstr)) {
             fclose($connection);
+            return true;
         }
+        echo 'Error <strong>' . $errno . ': ' . $errstr . '</strong> attempting to connect to host ' . $aspirehost;
 
         return false;
     }
