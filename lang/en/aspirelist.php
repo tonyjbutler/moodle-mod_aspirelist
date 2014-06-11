@@ -79,7 +79,6 @@ $string['modulename_help'] = '<p>The Aspire resource list module enables a teach
 $string['modulename_link'] = 'mod/aspirelist/view';
 $string['modulenameplural'] = 'Aspire resource lists';
 $string['modules'] = 'Modules';
-$string['neverseen'] = 'Never seen';
 $string['noaspirelists'] = 'Sorry, there are no resource lists associated with this {$a}.';
 $string['noautocompletioninline'] = 'Automatic completion on viewing of activity can not be selected together with the ' .
         '"Display inline" option';

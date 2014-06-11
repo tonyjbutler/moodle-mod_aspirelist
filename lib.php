@@ -147,57 +147,6 @@ function aspirelist_delete_instance($id) {
 }
 
 /**
- * Return user outline.
- * @param object $course
- * @param object $user
- * @param object $mod
- * @param object $aspirelist
- * @return object|null
- */
-function aspirelist_user_outline($course, $user, $mod, $aspirelist) {
-    global $DB;
-
-    if ($logs = $DB->get_records('log', array('userid'=>$user->id, 'module'=>'aspirelist',
-                                              'action'=>'view', 'info'=>$aspirelist->id), 'time ASC')) {
-
-        $numviews = count($logs);
-        $lastlog = array_pop($logs);
-
-        $result = new stdClass();
-        $result->info = get_string('numviews', '', $numviews);
-        $result->time = $lastlog->time;
-
-        return $result;
-    }
-    return null;
-}
-
-/**
- * Return user complete.
- * @param object $course
- * @param object $user
- * @param object $mod
- * @param object $aspirelist
- */
-function aspirelist_user_complete($course, $user, $mod, $aspirelist) {
-    global $DB;
-
-    if ($logs = $DB->get_records('log', array('userid'=>$user->id, 'module'=>'aspirelist',
-                                              'action'=>'view', 'info'=>$aspirelist->id), 'time ASC')) {
-        $numviews = count($logs);
-        $lastlog = array_pop($logs);
-
-        $strmostrecently = get_string('mostrecently');
-        $strnumviews = get_string('numviews', '', $numviews);
-
-        echo "$strnumviews - $strmostrecently ".userdate($lastlog->time);
-
-    } else {
-        print_string('neverseen', 'aspirelist');
-    }
-}
-
-/**
  * Return a list of page types.
  * @param string $pagetype current page type
  * @param stdClass $parentcontext Block's parent context
