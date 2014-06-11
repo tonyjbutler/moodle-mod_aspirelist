@@ -39,13 +39,13 @@ Installing from the Git repository (recommended if you installed Moodle from
 Git):
 
 Follow the instructions at
-http://docs.moodle.org/26/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository,
-e.g. for the Moodle 2.6.x code:
+http://docs.moodle.org/27/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository,
+e.g. for the Moodle 2.7.x code:
 $ cd /path/to/your/moodle/
 $ cd mod/
-$ git clone https://github.com/lucisgit/moodle-mod_aspirelist.git aspirelist
+$ git clone https://github.com/tonyjbutler/moodle-mod_aspirelist.git aspirelist
 $ cd aspirelist/
-$ git checkout -b MOODLE_26_STABLE origin/MOODLE_26_STABLE
+$ git checkout -b MOODLE_27_STABLE origin/MOODLE_27_STABLE
 $ git branch -d master
 $ cd /path/to/your/moodle/
 $ echo /mod/aspirelist/ >> .git/info/exclude
@@ -66,7 +66,7 @@ Updating Moodle
 ---------------
 If you installed Moodle and the Aspire resource list module from Git you can
 run the following commands to update both (see
-http://docs.moodle.org/26/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository):
+http://docs.moodle.org/27/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository):
 $ cd /path/to/your/moodle/
 $ git pull
 $ cd mod/aspirelist/
