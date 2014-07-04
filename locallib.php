@@ -336,10 +336,13 @@ class aspirelist {
         }
         $this->adminconfig = get_config('aspirelist');
 
-        // Remove trailing slash from Aspire URL if present
-        $this->adminconfig->aspireurl = rtrim($this->adminconfig->aspireurl, '/');
+        // Remove anything after the domain name in Aspire URL.
+        $slashpos = strpos($this->adminconfig->aspireurl, '/', 8);
+        if ($slashpos !== false) {
+            $this->adminconfig->aspireurl = substr_replace($this->adminconfig->aspireurl, '', $slashpos);
+        }
 
-        // Remove database prefix from Aspire code table name if present
+        // Remove database prefix from Aspire code table name if present.
         if (isset($this->adminconfig->codetable)) {
             $this->adminconfig->codetable = str_replace($CFG->prefix, '', $this->adminconfig->codetable);
         }
