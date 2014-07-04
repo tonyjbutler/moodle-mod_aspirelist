@@ -34,54 +34,36 @@ $string['codesource'] = 'Aspire code source';
 $string['codetable'] = 'Aspire code table';
 $string['configaspireurl'] = 'Enter the URL of your Talis Aspire site.';
 $string['configcodecolumn'] = 'Optional. The name of the column in the custom table containing your Talis Aspire list codes';
-$string['configcoderegex'] = 'Optional. If using the course ID number as your code source, this is a regular expression ' .
-        '(including delimiters) matching the Talis Aspire code part of it. If no regex is provided here it will be assumed ' .
-        'that the entire ID number is the Aspire code.';
+$string['configcoderegex'] = 'Optional. If using the course ID number as your code source, this is a regular expression (including delimiters) matching the Talis Aspire code part of it. If no regex is provided here it will be assumed that the entire ID number is the Aspire code.';
 $string['configcodesource'] = 'Select the source of your Talis Aspire list codes.';
-$string['configcodetable'] = 'Optional. The name of a custom table in the Moodle database containing your Talis Aspire list ' .
-        'codes mapped against a Moodle course attribute.';
-$string['configcourseattribute'] = 'Optional. The unique course attribute that is mapped against your Talis Aspire codes in ' .
-        'the custom table (normally id, idnumber or shortname).';
-$string['configcoursecolumn'] = 'Optional. The name of the column in the custom table containing the course attribute that is ' .
-        'mapped against your Talis Aspire list codes.';
+$string['configcodetable'] = 'Optional. The name of a custom table in the Moodle database containing your Talis Aspire list codes mapped against a Moodle course attribute.';
+$string['configcourseattribute'] = 'Optional. The unique course attribute that is mapped against your Talis Aspire codes in the custom table (normally id, idnumber or shortname).';
+$string['configcoursecolumn'] = 'Optional. The name of the column in the custom table containing the course attribute that is mapped against your Talis Aspire list codes.';
 $string['configknowledgegroup'] = 'Select the target knowledge group for your Talis Aspire lists.';
 $string['configrequiremodintro'] = 'Enable this option if you want to force users to enter a description for each resource list.';
-$string['configyearregex'] = 'Optional. This is a regular expression (including delimiters) matching the year code part of ' .
-        'your course ID numbers, and can be used irrespective of the source of the Aspire list codes. If no regex is provided ' .
-        'here it will be assumed that there is no year code.';
+$string['configyearregex'] = 'Optional. This is a regular expression (including delimiters) matching the year code part of your course ID numbers, and can be used irrespective of the source of the Aspire list codes. If no regex is provided here it will be assumed that there is no year code.';
 $string['contentheader'] = 'Resource list selection';
 $string['courseattribute'] = 'Course attribute';
 $string['coursecolumn'] = 'Course column';
 $string['display'] = 'Display resource list contents';
-$string['display_help'] = '<p>If you choose to display the resource list contents on the course page, there will be no link ' .
-        'to a separate page. The description will be displayed only if "Display description on course page" is checked.</p>' .
-        '<p>Also note that participants\' view actions cannot be logged in this case.</p>';
+$string['display_help'] = '<p>If you choose to display the resource list contents on the course page, there will be no link to a separate page. The description will be displayed only if "Display description on course page" is checked.</p><p>Also note that participants\' view actions cannot be logged in this case.</p>';
 $string['displayinline'] = 'Inline on the course page';
 $string['displaypage'] = 'On a separate page';
-$string['errorcodecolumn'] = 'You must specify the code column if you want to use a custom database table as your Aspire code ' .
-        'source.';
-$string['errorcodesource'] = 'You must provide all the table and column details below if you want to use a custom database ' .
-        'table as your Aspire code source.';
-$string['errorcodetable'] = 'You must specify the table name if you want to use a custom database table as your Aspire code ' .
-        'source.';
-$string['errorcourseattribute'] = 'You must specify a course attribute if you want to use a custom database table as your ' .
-        'Aspire code source.';
-$string['errorcoursecolumn'] = 'You must specify the course column if you want to use a custom database table as your Aspire ' .
-        'code source.';
+$string['errorcodecolumn'] = 'You must specify the code column if you want to use a custom database table as your Aspire code source.';
+$string['errorcodesource'] = 'You must provide all the table and column details below if you want to use a custom database table as your Aspire code source.';
+$string['errorcodetable'] = 'You must specify the table name if you want to use a custom database table as your Aspire code source.';
+$string['errorcourseattribute'] = 'You must specify a course attribute if you want to use a custom database table as your Aspire code source.';
+$string['errorcoursecolumn'] = 'You must specify the course column if you want to use a custom database table as your Aspire code source.';
 $string['itemcount'] = '{$a} item';
 $string['itemcountplural'] = '{$a} items';
 $string['knowledgegroup'] = 'Aspire knowledge group';
 $string['modulename'] = 'Aspire resource list';
-$string['modulename_help'] = '<p>The Aspire resource list module enables a teacher to include a selection of ' .
-        'resources from associated Talis Aspire resource lists directly within the content of their course.</p>' .
-        '<p>The resource list can be displayed either in a separate, linked page, or embedded in the course page ' .
-        'itself (hidden initially, with a link to toggle visibility).</p>';
+$string['modulename_help'] = '<p>The Aspire resource list module enables a teacher to include a selection of resources from associated Talis Aspire resource lists directly within the content of their course.</p><p>The resource list can be displayed either in a separate, linked page, or embedded in the course page itself (hidden initially, with a link to toggle visibility).</p>';
 $string['modulename_link'] = 'mod/aspirelist/view';
 $string['modulenameplural'] = 'Aspire resource lists';
 $string['modules'] = 'Modules';
 $string['noaspirelists'] = 'Sorry, there are no resource lists associated with this {$a}.';
-$string['noautocompletioninline'] = 'Automatic completion on viewing of activity can not be selected together with the ' .
-        '"Display inline" option';
+$string['noautocompletioninline'] = 'Automatic completion on viewing of activity can not be selected together with the "Display inline" option';
 $string['noconnection'] = 'Unfortunately the Talis Aspire website is currently unavailable. Please try again later.';
 $string['onlineresource'] = 'Online resource';
 $string['page-mod-aspirelist-view'] = 'Resource list module main page';
