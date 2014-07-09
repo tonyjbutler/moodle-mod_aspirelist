@@ -397,17 +397,20 @@ class aspirelist {
 
         $adminconfig = $this->get_admin_config();
 
-        if ($adminconfig->codesource === 'codetable') {
+        if ($adminconfig->codesource == 'codetable') {
             $codetable = $adminconfig->codetable;
             $codecolumn = $adminconfig->codecolumn;
             $coursecolumn = $adminconfig->coursecolumn;
             $courseattribute = $course->{$adminconfig->courseattribute};
 
             if (!$codes = $DB->get_records($codetable, array($coursecolumn => $courseattribute), null, 'id, ' . $codecolumn)) {
-                return array();
+                $codes = array();
             }
             $codes = array_map(create_function('$code', 'return $code->' . $codecolumn . ';'), $codes);
-        } else {
+        }
+
+        // Try ID number as fallback if no code found in code table, regardless of code source specified in admin config.
+        if ($adminconfig->codesource == 'idnumber' || empty($codes)) {
             if ($coderegex = $adminconfig->coderegex) {
                 preg_match($coderegex, $course->idnumber, $codes);
             } else {
