@@ -552,8 +552,9 @@ class aspirelist {
      * @param DOMXPath $xpath A DOMXPath document object representing the list
      * @return DOMNodeList An object containing the DOM nodes for the top level sections
      */
-    public function get_section_nodes($xpath) {
-        $sectionsquery = '//ol[contains(@id, "listEntries")]/li[contains(@class, "section")]';
+    public function get_list_nodes($xpath) {
+        $sectionsquery = '//ol[contains(@id, "listEntries")]/li[contains(@class, "section")]' .
+                ' | //ol[contains(@id, "listEntries")]/li[contains(@class, "item")]';
         $sectionnodes = $this->get_dom_nodelist($xpath, $sectionsquery);
         return $sectionnodes;
     }
@@ -780,7 +781,7 @@ class aspirelist {
      * @return string A comma separated list of selected resource items
      */
     public function get_items_list($formdata) {
-        $itemregex = '/^list-[A-F0-9\-]{36}(_section-[A-F0-9\-]{36})+_item-[A-F0-9\-]{36}$/';
+        $itemregex = '/^list-[A-F0-9\-]{36}(_section-[A-F0-9\-]{36})*_item-[A-F0-9\-]{36}$/';
 
         $items = array();
         foreach ($formdata as $name => $value) {
@@ -875,6 +876,8 @@ class aspirelist {
                     // If previous item was a resource, close the unordered list element.
                     $html .= html_writer::end_tag('ul');
                 }
+                // Open a section box and print the heading data.
+                $html .= html_writer::start_div('listsection');
                 $html .= $this->get_section_html($list, $key, $itemcount, $headinglevel);
                 // Remember that this was a section.
                 $wassection = true;
@@ -887,6 +890,8 @@ class aspirelist {
                     // This is a list item so print it.
                     $html .= $this->print_item($list, $value, $wassection);
                 }
+                // Close the section box.
+                $html .= html_writer::end_div();
             } else if (preg_match($this->itemidregex, $value)) {
                 // This is a list item so print it.
                 $html .= $this->print_item($list, $value, $wassection);
