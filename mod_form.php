@@ -113,18 +113,36 @@ class mod_aspirelist_mod_form extends moodleform_mod {
 
     private function setup_list_elements(&$mform, $lists) {
         $checkboxgrp = 1;
+        $wassection = true;
 
         foreach ($lists as $list) {
             $selectresources = html_writer::div(get_string('selectresources', 'aspirelist', $list->name), 'selectresources');
             $mform->addElement('html', $selectresources);
 
-            // Get DOM node list for top level sections.
-            $sectionnodes = $this->aspirelist->get_section_nodes($list->xpath);
-            foreach ($sectionnodes as $sectionnode) {
-                $section = $this->aspirelist->get_section_data($list->xpath, $sectionnode, null, 'list-' . $list->id, true);
-                $this->setup_section_elements($mform, $checkboxgrp, $list->xpath, $section);
+            // Get DOM node list for top level sections and list items.
+            $listnodes = $this->aspirelist->get_list_nodes($list->xpath);
+            foreach ($listnodes as $listnode) {
+                if ($this->aspirelist->is_section($list->xpath, $listnode)) {
+                    // This is a section, so fetch its data and set up its elements.
+                    $section = $this->aspirelist->get_section_data($list->xpath, $listnode, null, 'list-' . $list->id, true);
+                    $this->setup_section_elements($mform, $checkboxgrp, $list->xpath, $section);
+                } else {
+                    // This is a resource list item, so fetch its data and set up its elements.
+                    $listitem = $this->aspirelist->get_item_data($list->xpath, $listnode, null, 'list-' . $list->id);
+                    if ($listitem) {
+                        if ($wassection) {
+                            // If this is the first list item in a section, add a checkbox controller.
+                            $this->add_checkbox_controller($checkboxgrp, null, null, 0);
+                            // Increment checkbox group for next section.
+                            $checkboxgrp++;
+                        }
+                        $this->setup_item_elements($mform, $checkboxgrp, $listitem);
+                        // Remember that this was not a section heading.
+                        $wassection = false;
+                    }
+                }
             }
-            unset($sectionnodes);
+            unset($listnodes);
         }
         unset($lists);
     }
@@ -139,7 +157,7 @@ class mod_aspirelist_mod_form extends moodleform_mod {
         // Don't let heading level exceed 6.
         $headinglevel = $headinglevel <= 6 ? $headinglevel : 6;
 
-        // Remember that this was a section.
+        // Remember that this was a section heading.
         $wassection = true;
 
         foreach ($section->items as $sectionitem) {
@@ -152,13 +170,13 @@ class mod_aspirelist_mod_form extends moodleform_mod {
                 $listitem = $this->aspirelist->get_item_data($xpath, $sectionitem, null, $section->path);
                 if ($listitem) {
                     if ($wassection) {
-                        // If previous item was a section and a list item follows, add a checkbox controller.
+                        // If this is the first list item in a section, add a checkbox controller.
                         $this->add_checkbox_controller($checkboxgrp, null, null, 0);
                         // Increment checkbox group for next section.
                         $checkboxgrp++;
                     }
                     $this->setup_item_elements($mform, $checkboxgrp, $listitem);
-                    // Remember that this was not a section.
+                    // Remember that this was not a section heading.
                     $wassection = false;
                 }
             }
