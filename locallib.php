@@ -486,10 +486,12 @@ class aspirelist {
 
         $list->id = $listid;
         $list->url = $adminconfig->aspireurl . '/lists/' . $listid . '.html';
-        $list->xpath = $this->get_xpath($list->url);
 
-        $namequery = '//h1[contains(@id, "pageTitle")]';
-        $list->name = trim($this->get_dom_nodelist($list->xpath, $namequery, null, true, true));
+        if ($list->xpath = $this->get_xpath($list->url)) {
+            $namequery = '//h1[contains(@id, "pageTitle")]';
+            // We only want the main text content of the h1, not its sub-elements.
+            $list->name = trim($this->get_dom_nodelist($list->xpath, $namequery, null, true)->firstChild->textContent);
+        }
 
         return $list;
     }
