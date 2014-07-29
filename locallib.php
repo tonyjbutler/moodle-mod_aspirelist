@@ -967,7 +967,7 @@ class aspirelist {
         if ($section = $this->get_section_data($list->xpath, null, $sectionid)) {
             if ($itemcount > 0) {
                 $plural = $itemcount > 1 ? 'plural' : '';
-                $itemcount = ' ' . get_string('itemcount' . $plural, 'aspirelist', $itemcount);
+                $itemcount = ' (' . get_string('itemcount' . $plural, 'aspirelist', $itemcount) . ')';
                 $countspan = html_writer::tag('span', $itemcount, array('class' => 'itemcount dimmed_text'));
             } else {
                 $countspan = '';

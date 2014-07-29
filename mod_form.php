@@ -150,7 +150,7 @@ class mod_aspirelist_mod_form extends moodleform_mod {
     private function setup_section_elements(&$mform, &$checkboxgrp, $xpath, $section, $headinglevel = 3) {
         global $OUTPUT;
 
-        $countspan = html_writer::tag('span', $section->itemcount, array('class' => 'itemcount dimmed_text'));
+        $countspan = html_writer::tag('span', '(' . $section->itemcount . ')', array('class' => 'itemcount dimmed_text'));
         $heading = $OUTPUT->heading($section->name . ' ' . $countspan, $headinglevel, 'sectionheading', $section->id);
         $mform->addElement('html', $heading . $section->note);
 
