@@ -103,6 +103,7 @@ class mod_aspirelist_mod_form extends moodleform_mod {
                 array(ASPIRELIST_DISPLAY_PAGE => get_string('displaypage', 'aspirelist'),
                     ASPIRELIST_DISPLAY_INLINE => get_string('displayinline', 'aspirelist')));
         $mform->addHelpButton('display', 'display', 'aspirelist');
+        $mform->setDefault('display', $config->defaultdisplay);
 
         //-------------------------------------------------------
         $this->standard_coursemodule_elements();

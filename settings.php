@@ -32,6 +32,13 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('aspirelist/requiremodintro', get_string('requiremodintro', 'aspirelist'),
             get_string('configrequiremodintro', 'aspirelist'), 0));
 
+    // Display settings.
+    $optionsdd = array();
+    $optionsdd[0] = get_string('displaypage', 'aspirelist');
+    $optionsdd[1] = get_string('displayinline', 'aspirelist');
+    $settings->add(new admin_setting_configselect('aspirelist/defaultdisplay', get_string('defaultdisplay', 'aspirelist'),
+            get_string('configdefaultdisplay', 'aspirelist'), 'displaypage', $optionsdd));
+
     // Talis Aspire URL.
     $settings->add(new admin_setting_configtext('aspirelist/aspireurl', get_string('aspireurl', 'aspirelist'),
             get_string('configaspireurl', 'aspirelist'), 'http://', PARAM_URL));
