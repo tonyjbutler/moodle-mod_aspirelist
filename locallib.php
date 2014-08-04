@@ -845,7 +845,7 @@ class aspirelist {
         $parts = explode('_', $itemid);
         $partscount = count($parts);
 
-        $path = $parts[$partscount - 1];
+        $path = array($parts[$partscount - 1]);
 
         for ($i = $partscount - 2; $i >= 0; $i--) {
             $path = array($parts[$i] => $path);
@@ -881,14 +881,10 @@ class aspirelist {
                 $html .= $this->get_section_html($list, $key, $itemcount, $headinglevel);
                 // Remember that this was a section.
                 $wassection = true;
-                // Then process its sub-sections and/or resource items.
+                // Then process any sub-sections.
                 if (is_array($value)) {
-                    // This is a sub-section so send it for processing.
                     $subtree = $tree[$key];
                     $this->print_section($list, $subtree, $html, $headinglevel + 1);
-                } else if (preg_match($this->itemidregex, $value)) {
-                    // This is a list item so print it.
-                    $html .= $this->print_item($list, $value, $wassection);
                 }
                 // Close the section box.
                 $html .= html_writer::end_div();
