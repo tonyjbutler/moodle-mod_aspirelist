@@ -29,7 +29,7 @@ embedded in the course page itself (hidden initially, with a link to toggle
 visibility).
 
 The development of this module was based on previous work by the University of
-Sussex and Falmouth University.
+Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 
 
 Installation
