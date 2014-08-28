@@ -412,7 +412,8 @@ class aspirelist {
         // Try ID number as fallback if no code found in code table, regardless of code source specified in admin config.
         if ($adminconfig->codesource == 'idnumber' || empty($codes)) {
             if ($coderegex = $adminconfig->coderegex) {
-                preg_match($coderegex, $course->idnumber, $codes);
+                preg_match_all($coderegex, $course->idnumber, $codes, PREG_PATTERN_ORDER);
+                $codes = $codes[0];
             } else {
                 $codes = array($course->idnumber);
             }
