@@ -22,42 +22,38 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-#page-mod-aspirelist-mod .mform #id_content .fitem_fcheckbox + div.selectresources {
-    margin-top: 1em;
-}
-
-#page-mod-aspirelist-mod .mform #id_content h3, #page-mod-aspirelist-mod .mform #id_content h4,
-#page-mod-aspirelist-mod .mform #id_content h5, #page-mod-aspirelist-mod .mform #id_content h6 {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h3, #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h4,
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h5, #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h6 {
     margin: 1em 0 0 24px;
 }
 
-#page-mod-aspirelist-mod .mform #id_content div.sectionnote {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] div.sectionnote {
     margin-left: 24px;
 }
 
-#page-mod-aspirelist-mod .mform #id_content .fitem {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem {
     margin-bottom: 0;
 }
 
-#page-mod-aspirelist-mod .mform #id_content .fitem .fsubmit {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit {
     margin-top: 0.5em;
     margin-left: 24px;
 }
 
-#page-mod-aspirelist-mod .mform #id_content .fitem_fcheckbox .fitemtitle {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem_fcheckbox .fitemtitle {
     width: 77%;
     text-align: left;
     float: right;
 }
 
-#page-mod-aspirelist-mod .mform #id_content .fitem_fcheckbox .fcheckbox {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem_fcheckbox .fcheckbox {
     margin: 0 0 0 24px;
     width: 5%;
     text-align: right;
     float: right;
 }
 
-#page-mod-aspirelist-mod .mform #id_content .fitem .fsubmit a {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a {
 	color: #777;
 	text-decoration: none;
 	text-shadow: 0 1px 0 #FFF;
@@ -76,8 +72,8 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDEDED', endColorstr='#DFDFDF');
 }
 
-#page-mod-aspirelist-mod .mform #id_content .fitem .fsubmit a:active,
-#page-mod-aspirelist-mod .mform #id_content .fitem .fsubmit a:hover {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a:active,
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a:hover {
 	background-color: #DFDFDF;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #DFDFDF), color-stop(1, #EDEDED));
 	background: -moz-linear-gradient(center top, #DFDFDF 5%, #EDEDED 100%);

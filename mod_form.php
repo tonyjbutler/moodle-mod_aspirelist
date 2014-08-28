@@ -79,9 +79,6 @@ class mod_aspirelist_mod_form extends moodleform_mod {
         $this->add_intro_editor($config->requiremodintro);
 
         //-------------------------------------------------------
-        $mform->addElement('header', 'content', get_string('contentheader', 'aspirelist'));
-        $mform->setExpanded('content', true);
-
         if ($this->aspirelist->test_connection()) {
             if ($lists = $this->aspirelist->get_lists($course)) {
                 $this->setup_list_elements($mform, $lists);
@@ -115,10 +112,12 @@ class mod_aspirelist_mod_form extends moodleform_mod {
     private function setup_list_elements(&$mform, $lists) {
         $checkboxgrp = 1;
         $wassection = true;
+        $listindex = 0;
 
         foreach ($lists as $list) {
-            $selectresources = html_writer::div(get_string('selectresources', 'aspirelist', $list->name), 'selectresources');
-            $mform->addElement('html', $selectresources);
+            $mform->addElement('header', 'list-' . $listindex, get_string('selectresources', 'aspirelist', $list->name));
+            $mform->setExpanded('list-' . $listindex, false);
+            $listindex += 1;
 
             // Get DOM node list for top level sections and list items.
             $listnodes = $this->aspirelist->get_list_nodes($list->xpath);
@@ -145,6 +144,12 @@ class mod_aspirelist_mod_form extends moodleform_mod {
             }
             unset($listnodes);
         }
+
+        // If only one resource list was found, expand its fieldset automatically.
+        if (count($lists) == 1) {
+            $mform->setExpanded('list-0', true);
+        }
+
         unset($lists);
     }
 
