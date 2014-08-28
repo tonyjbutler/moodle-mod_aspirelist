@@ -22,6 +22,10 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h3:first-child {
+    margin-top: 0;
+}
+
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h3, #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h4,
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h5, #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h6 {
     margin: 1em 0 0 24px;
@@ -37,20 +41,20 @@
 
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit {
     margin-top: 0.5em;
-    margin-left: 24px;
+    margin-left: 24px !important;
 }
 
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem_fcheckbox .fitemtitle {
-    width: 77%;
+    width: 77% !important;
     text-align: left;
     float: right;
 }
 
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem_fcheckbox .fcheckbox {
     margin: 0 0 0 24px;
-    width: 5%;
+    width: 5% !important;
     text-align: right;
-    float: right;
+    float: right !important;
 }
 
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a {
@@ -61,7 +65,7 @@
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #EDEDED), color-stop(1, #DFDFDF));
 	background: -moz-linear-gradient(center top, #EDEDED 5%, #DFDFDF 100%);
 	display: inline-block;
-    padding: 3px 6px;
+    padding: 3px 9px;
 	border: 1px solid #DCDCDC;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
