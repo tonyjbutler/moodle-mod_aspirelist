@@ -459,7 +459,9 @@ class aspirelist {
                     foreach ($data[$codedata]['http://purl.org/vocab/resourcelist/schema#usesList'] as $useslist) {
                         $listid = substr($useslist['value'], -36);
                         $list = $this->get_list_data($listid);
-                        $lists[$list->name] = $list;
+                        if (isset($list->name)) {
+                            $lists[$list->name] = $list;
+                        }
                     }
                     unset($data);
                 }
