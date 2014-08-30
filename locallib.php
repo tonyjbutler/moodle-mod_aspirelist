@@ -387,12 +387,13 @@ class aspirelist {
     }
 
     /**
-     * Fetch all Talis Aspire list codes associated with the current course.
+     * Fetch all Talis Aspire list codes associated with a course.
      *
-     * @param stdClass $course The data for the current course
+     * @param stdClass $course The data object for the course
+     * @param bool $child Whether or not this is a meta child course
      * @return array An array of Talis Aspire list codes
      */
-    private function get_codes($course) {
+    private function get_codes($course, $child = false) {
         global $DB;
 
         $adminconfig = $this->get_admin_config();
@@ -419,7 +420,38 @@ class aspirelist {
             }
         }
 
-        return $codes;
+        // Check for additional codes in meta child courses (if enabled in site config).
+        if ($adminconfig->includechildcodes && !$child) {
+            if ($childcourses = $this->get_child_courses($course->id)) {
+                foreach ($childcourses as $childcourse) {
+                    $codes = array_merge($codes, $this->get_codes($childcourse, true));
+                }
+            }
+        }
+
+        return array_unique($codes);
+    }
+
+    /**
+     * Determine whether the current course has any course meta link enrolment instances,
+     * and if it does, fetch the child courses.
+     *
+     * @param int $courseid The ID of the current course
+     * @return array An array of meta child course objects
+     */
+    private function get_child_courses($courseid) {
+        global $DB;
+
+        $childcourses = array();
+        $select = "enrol = 'meta' AND status = 0 AND courseid = $courseid";
+
+        if ($childcourseids = $DB->get_fieldset_select('enrol', 'customint1', $select)) {
+            foreach ($childcourseids as $childcourseid) {
+                $childcourses[] = get_course($childcourseid);
+            }
+        }
+
+        return $childcourses;
     }
 
     /**
