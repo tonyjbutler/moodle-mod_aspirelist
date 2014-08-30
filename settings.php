@@ -60,6 +60,10 @@ if ($ADMIN->fulltree) {
     $settings->add(new aspirelist_codesource_setting('aspirelist/codesource', get_string('codesource', 'aspirelist'),
             get_string('configcodesource', 'aspirelist'), 'idnumber', $optionscs));
 
+    // Meta child codes.
+    $settings->add(new admin_setting_configcheckbox('aspirelist/includechildcodes', get_string('includechildcodes', 'aspirelist'),
+            get_string('configincludechildcodes', 'aspirelist'), 0));
+
     // Code regexes.
     $settings->add(new admin_setting_configtext('aspirelist/coderegex', get_string('coderegex', 'aspirelist'),
             get_string('configcoderegex', 'aspirelist'), '', PARAM_TEXT));
