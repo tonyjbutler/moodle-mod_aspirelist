@@ -357,7 +357,7 @@ class aspirelist {
      */
     public function test_connection() {
         $adminconfig = $this->get_admin_config();
-        $aspirehost = ltrim($adminconfig->aspireurl, 'http://');
+        $aspirehost = str_replace(array('http://', 'https://'), '', $adminconfig->aspireurl);
 
         if ($connection = @fsockopen($aspirehost, 80, $errno, $errstr)) {
             fclose($connection);
