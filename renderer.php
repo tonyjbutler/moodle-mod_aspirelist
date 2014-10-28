@@ -56,11 +56,11 @@ class mod_aspirelist_renderer extends plugin_renderer_base {
 
         $resourcelist = new resource_list($aspirelist, $cm);
         if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
-            $listid = $cm->modname . '-' . $cm->id;
             $viewlink = (string) $cm->get_url();
+            $listid = $cm->modname . '-' . $cm->id;
 
             // YUI function to hide inline resource list until user clicks 'view' link.
-            $this->page->requires->js_init_call('M.mod_aspirelist.init_list', array('#' . $listid, $viewlink));
+            $this->page->requires->js_init_call('M.mod_aspirelist.init_list', array($cm->id, $viewlink));
             $output .= $this->output->box($this->render($resourcelist), 'generalbox aspirelistbox', $listid);
         } else {
             $output .= $this->output->box($this->render($resourcelist), 'generalbox', 'aspirelist');
