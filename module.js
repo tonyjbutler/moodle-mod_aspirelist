@@ -23,16 +23,50 @@
 
 M.mod_aspirelist = {};
 
-M.mod_aspirelist.init_list = function(Y, id, url) {
-    Y.use('node', function(Y) {
-        Y.one(id).hide();
+M.mod_aspirelist.init_list = function(Y, cmid, url) {
+    Y.use('node', 'transition', function(Y) {
+        function setRelativePosition() {
+            this.setStyle('position', 'relative');
+        }
+        Y.Transition.fx.slideFadeOut = {
+            opacity: 0,
+            top: '-100px',
+            left: '-600px',
+            duration: 0.2,
+            easing: 'ease-out',
+            on: { start: setRelativePosition }
+        };
+        Y.Transition.fx.slideFadeIn = {
+            opacity: 1.0,
+            top: '0px',
+            left: '0px',
+            duration: 0.2,
+            easing: 'ease-in',
+            on: { start: setRelativePosition }
+        };
+
+        var listid = '#aspirelist-' + cmid,
+            arrowid = '#showhide-' + cmid;
+
+        // Hide list if JS enabled.
+        Y.one(listid).hide('slideFadeOut');
+        // Have to hide again without transition to get display: none.
+        Y.one(listid).hide();
+        Y.one(arrowid).addClass('collapsed');
 
         Y.delegate('click', function(e) {
             var linkhref = e.currentTarget.get('href'),
-                list = Y.one(id);
+                list = Y.one(listid),
+                arrow = Y.one(arrowid);
 
             if (linkhref === url) {
-                list.toggleView();
+                if (arrow.hasClass('collapsed')) {
+                    list.show('slideFadeIn');
+                    arrow.removeClass('collapsed');
+                } else {
+                    list.hide('slideFadeOut');
+                    arrow.addClass('collapsed');
+                }
             }
 
         }, document, 'a');
