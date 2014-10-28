@@ -210,9 +210,11 @@ function aspirelist_cm_info_dynamic(cm_info $cm) {
         // The field 'customdata' is not empty IF AND ONLY IF we display contents inline.
         $cm->set_on_click('return false;');
 
-        // Display hint to users that clicking the link toggles visibility.
-        $showhidehint = ' ' . html_writer::span(get_string('showhide', 'aspirelist'), 'showhidehint dimmed_text');
-        $cm->set_after_link($showhidehint);
+        // Display a visual cue to users that clicking the link toggles visibility.
+        $showhidearrow = html_writer::div('', 'showhidearrow', array('id' => 'showhide-' . $cm->id,
+            'title' => get_string('showhide', 'aspirelist')));
+        $showhidelink = html_writer::link($cm->url, $showhidearrow, array('onclick' => 'return false;'));
+        $cm->set_after_link($showhidelink);
     }
 }
 

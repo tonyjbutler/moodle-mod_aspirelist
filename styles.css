@@ -192,6 +192,18 @@ div.aspirelistbox ul.sectionitems li.listitem a.webbutton:hover {
     background-image: none;
 }
 
-.showhidehint {
-    font-size: 0.85em;
+.aspirelist .showhidearrow {
+    background: url([[pix:core|t/expanded]]);
+    margin-left: 3px;
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+    -webkit-transition: -webkit-transform 0.2s;
+    transition: transform 0.2s;
+}
+
+.aspirelist .collapsed {
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
 }
