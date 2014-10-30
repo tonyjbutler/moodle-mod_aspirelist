@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2014080302;       // The current module version (Date: YYYYMMDDXX)
+$plugin->version   = 2014103002;       // The current module version (Date: YYYYMMDDXX)
 $plugin->requires  = 2014051200;       // Requires this Moodle version
 $plugin->component = 'mod_aspirelist'; // Full name of the plugin (used for diagnostics)
 $plugin->cron      = 0;
-$plugin->release   = '2.7.1';
+$plugin->release   = '2.7.2';
 $plugin->maturity  = MATURITY_STABLE;
