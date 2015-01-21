@@ -509,20 +509,18 @@ class aspirelist {
     }
 
     /**
-     * Fetch some basic metadata for the specified Talis Aspire list.
+     * Fetch the name and contents of the specified Talis Aspire list.
      *
      * @param string $listid The GUID of the required Talis list
-     * @return stdClass An object containing the list's metadata
+     * @param bool $cached Whether to return cached data if available
+     * @return stdClass An object containing the list's data
      */
-    private function get_list_data($listid) {
-        $adminconfig = $this->get_admin_config();
-
+    private function get_list_data($listid, $cached = false) {
         $list = new stdClass();
 
         $list->id = $listid;
-        $list->url = $adminconfig->aspireurl . '/lists/' . $listid . '.html';
 
-        if ($list->xpath = $this->get_xpath($list->url)) {
+        if ($list->xpath = $this->get_xpath($listid, $cached)) {
             $namequery = '//h1[contains(@id, "pageTitle")]';
             // We only want the main text content of the h1, not its sub-elements.
             $list->name = trim($this->get_dom_nodelist($list->xpath, $namequery, null, true)->firstChild->textContent);
@@ -532,19 +530,31 @@ class aspirelist {
     }
 
     /**
-     * Create a DOMXPath object from the HTML document at the given URL.
+     * Create a DOMXPath object from the resource list with the given ID.
      *
-     * @param string $url The URL of a Talis Aspire resource list
+     * @param string $id The GUID of a Talis Aspire resource list
+     * @param bool $cached Whether to return cached data if available
      * @return DOMXPath A document object suitable for querying with XPath
      */
-    private function get_xpath($url) {
-        $doc = new DOMDocument;
-        if (@$doc->loadHTMLFile($url)) {
-            $xpath = new DOMXPath($doc);
-            return $xpath;
-        } else {
-            return null;
+    private function get_xpath($id, $cached = false) {
+        $adminconfig = $this->get_admin_config();
+        $url = $adminconfig->aspireurl . '/lists/' . $id . '.html';
+
+        // Create a cache object to store list data.
+        $cache = cache::make('mod_aspirelist', 'listdata');
+
+        $doc = new DOMDocument();
+        if (!$cached || (!$list = $cache->get($id))) {
+            if (@$doc->loadHTMLFile($url)) {
+                $list = $doc->saveHTML();
+                $cache->set($id, $list);
+            } else if (!$list = $cache->get($id)) {
+                return null;
+            }
         }
+        $doc->loadHTML($list);
+
+        return new DOMXPath($doc);
     }
 
     /**
@@ -856,7 +866,8 @@ class aspirelist {
 
                 foreach ($lists as $list) {
                     $listid = substr($list, 5);
-                    $listdata = $this->get_list_data($listid);
+                    // Fetch list data, from cache if available.
+                    $listdata = $this->get_list_data($listid, true);
 
                     $subtree = $tree[$list];
                     $html .= $this->print_section($listdata, $subtree);
