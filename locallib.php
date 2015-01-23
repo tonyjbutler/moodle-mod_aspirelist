@@ -547,10 +547,29 @@ class aspirelist {
         if (!$cached || (!$list = $cache->get($id))) {
             if (@$doc->loadHTMLFile($url)) {
                 $list = $doc->saveHTML();
-                $cache->set($id, $list);
-            } else if (!$list = $cache->get($id)) {
-                return null;
+                echo 'List fetched from Aspire.<br>';
+                if ($cache->get($id)) {
+                    echo 'Existing list found in cache.<br>';
+                } else {
+                    echo 'No list in cache yet.<br>';
+                }
+                $success = $cache->set($id, $list);
+                if ($success) {
+                    echo 'List cached successfully.<br>';
+                } else {
+                    echo 'List caching failed.<br>';
+                }
+            } else {
+                echo 'Can\'t load list from Aspire.<br>';
+                if (!$list = $cache->get($id)) {
+                    echo 'Can\'t get list from cache.<br>';
+                    return null;
+                } else {
+                    echo 'List successfully loaded from cache.<br>';
+                }
             }
+        } else if ($list) {
+            echo 'List loaded from cache.<br>';
         }
         $doc->loadHTML($list);
 
