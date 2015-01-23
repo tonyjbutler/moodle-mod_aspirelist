@@ -32,6 +32,30 @@ The development of this module was based on previous work by the University of
 Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 
 
+Changelog
+---------
+
+2015-01-21  v2.7.3/2.6.5/2.5.5
+
+  * Implement Moodle Universal Cache support for caching of resource list data
+
+2014-10-30  v2.7.2/2.6.4/2.5.4
+
+  * Animate showing/hiding of lists and use arrow icon to indicate visibility
+  * Add option to include Aspire codes from meta linked child courses
+  * Fix styles for config form display on mobile devices
+  * Display individual lists in separate collapsible fieldsets in config form
+  * Add support for multiple Aspire code matches in idnumber string
+  * Fix HTML rendering for single-item sections
+
+2014-08-03  v2.7.1/2.6.3/2.5.3
+
+  * Add admin config setting for default list display mode
+  * Support loose resource items not contained within a list section
+  * Update styles to work better with both Bootstrap and standard themes
+  * Use ID number as fallback code source if no code found in custom table
+
+
 Installation
 ------------
 
