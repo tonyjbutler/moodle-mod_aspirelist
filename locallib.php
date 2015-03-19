@@ -420,6 +420,15 @@ class aspirelist {
             }
         }
 
+        if ($adminconfig->codesource == 'shortname') {
+            if ($coderegex = $adminconfig->coderegex) {
+                preg_match_all($coderegex, $course->shortname, $codes, PREG_PATTERN_ORDER);
+                $codes = $codes[0];
+            } else {
+                $codes = array($course->shortname);
+            }
+        }
+
         // Check for additional codes in meta child courses (if enabled in site config).
         if ($adminconfig->includechildcodes && !$child) {
             if ($childcourses = $this->get_child_courses($course->id)) {
@@ -464,10 +473,10 @@ class aspirelist {
         $adminconfig = $this->get_admin_config();
         $codes = $this->get_codes($course);
 
-        // Check if the course idnumber contains a year reference.
+        // Check if the course idnumber or shortname contains a year reference.
         $year = false;
         if ($yearregex = $adminconfig->yearregex) {
-            if (preg_match($yearregex, $course->idnumber, $year)) {
+            if (preg_match($yearregex, $course->idnumber, $year) || preg_match($yearregex, $course->shortname, $year)) {
                 $year = $year[0];
             }
         }

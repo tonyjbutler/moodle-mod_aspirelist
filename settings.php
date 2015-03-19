@@ -56,6 +56,7 @@ if ($ADMIN->fulltree) {
     // Code source.
     $optionscs = array();
     $optionscs['idnumber'] = get_string('idnumbercourse');
+    $optionscs['shortname'] = get_string('shortnamecourse');
     $optionscs['codetable'] = get_string('codetable', 'aspirelist');
     $settings->add(new aspirelist_codesource_setting('aspirelist/codesource', get_string('codesource', 'aspirelist'),
             get_string('configcodesource', 'aspirelist'), 'idnumber', $optionscs));
