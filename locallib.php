@@ -770,7 +770,8 @@ class aspirelist {
                 $item->studynote = '';
             }
 
-            $buttonquery = '../../div/div[contains(@class, "item-actions")]/div/div/p/a[contains(@class, "btnWebLink")]';
+            $buttonquery = '../../div/div[contains(@class, "item-actions")]/div/div/p/a[contains(@class, "btnWebLink")'
+                    . ' and not(contains(@class, "btnDigitisation"))]';
             $webbutton = $this->get_dom_nodelist($xpath, $buttonquery, $itemdetails, true);
             if ($webbutton) {
                 $buttonlabel = get_string('onlineresource', 'aspirelist');
