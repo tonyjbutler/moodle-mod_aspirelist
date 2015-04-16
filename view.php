@@ -44,8 +44,12 @@ $course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);
 require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/aspirelist:view', $context);
+
 if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
-    redirect(course_get_url($aspirelist->course, $cm->sectionnum));
+    // Redirect only if page was not requested via AJAX.
+    if (!(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) {
+        redirect(course_get_url($aspirelist->course, $cm->sectionnum));
+    }
 }
 
 $params = array(

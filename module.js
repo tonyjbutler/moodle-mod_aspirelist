@@ -63,6 +63,24 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
                 if (arrow.hasClass('collapsed')) {
                     list.show('slideFadeIn');
                     arrow.removeClass('collapsed');
+
+                    // Send AJAX request for view.php to trigger log/completion events.
+                    if (window.XMLHttpRequest) {
+                        httpRequest = new XMLHttpRequest();
+                    } else if (window.ActiveXObject) {
+                        try {
+                            httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+                        }
+                        catch (e) {
+                            try {
+                                httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                            }
+                            catch (e) {}
+                        }
+                    }
+                    httpRequest.open('GET', url);
+                    httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
+                    httpRequest.send();
                 } else {
                     list.hide('slideFadeOut');
                     arrow.addClass('collapsed');
