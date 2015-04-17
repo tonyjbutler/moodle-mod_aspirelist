@@ -59,12 +59,17 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
                 list = Y.one(listid),
                 arrow = Y.one(arrowid);
 
-            if (linkhref === url) {
-                if (arrow.hasClass('collapsed')) {
-                    list.show('slideFadeIn');
-                    arrow.removeClass('collapsed');
+            // Add a JavaScript loading icon.
+            var spinner = M.util.add_spinner(Y, e.currentTarget.ancestor('div'));
+            spinner.removeClass('iconsmall');
+            spinner.setStyle('position', 'static');
 
-                    // Send AJAX request for view.php to trigger log/completion events.
+            if (linkhref === url) {
+                // Display the JS loading icon.
+                spinner.show();
+
+                if (arrow.hasClass('collapsed')) {
+                    // Send AJAX request for view.php (to trigger log/completion events).
                     if (window.XMLHttpRequest) {
                         httpRequest = new XMLHttpRequest();
                     } else if (window.ActiveXObject) {
@@ -78,12 +83,30 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
                             catch (e) {}
                         }
                     }
+                    httpRequest.onreadystatechange = checkResponse;
                     httpRequest.open('GET', url);
                     httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
                     httpRequest.send();
+
+                    // Parse the response and check for errors.
+                    function checkResponse() {
+                        if (httpRequest.readyState === 4) {
+                            var data = Y.JSON.parse(httpRequest.responseText);
+                            if (data.hasOwnProperty('error')) { // Alert user if an error has occurred.
+                                alert(data.error);
+                            } else { // If all is well, expand the list.
+                                list.show('slideFadeIn');
+                                arrow.removeClass('collapsed');
+                                // Hide the JS loading icon.
+                                spinner.hide();
+                            }
+                        }
+                    }
                 } else {
                     list.hide('slideFadeOut');
                     arrow.addClass('collapsed');
+                    // Hide the JS loading icon.
+                    spinner.hide();
                 }
             }
 

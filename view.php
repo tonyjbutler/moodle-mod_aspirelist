@@ -27,6 +27,20 @@ require_once('../../config.php');
 require_once($CFG->dirroot . '/mod/aspirelist/locallib.php');
 require_once($CFG->libdir . '/completionlib.php');
 
+// Was this page requested via AJAX?
+$ajaxrequest = (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
+
+// Stop here with an alert if page was requested via AJAX and the user is not logged in.
+if ($ajaxrequest && !isloggedin()) {
+    $result = new stdClass();
+    $result->error = get_string('sessionerroruser', 'error');
+    if (ob_get_contents()) {
+        ob_clean();
+    }
+    echo json_encode($result);
+    die();
+}
+
 $id = optional_param('id', 0, PARAM_INT);  // Course module id.
 $a  = optional_param('a', 0, PARAM_INT);   // Aspirelist instance id.
 
@@ -45,11 +59,9 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/aspirelist:view', $context);
 
-if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE) {
-    // Redirect only if page was not requested via AJAX.
-    if (!(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest')) {
-        redirect(course_get_url($aspirelist->course, $cm->sectionnum));
-    }
+// Redirect only if page was not requested via AJAX.
+if ($aspirelist->display == ASPIRELIST_DISPLAY_INLINE && !$ajaxrequest) {
+    redirect(course_get_url($aspirelist->course, $cm->sectionnum));
 }
 
 $params = array(
@@ -63,6 +75,15 @@ $event->trigger();
 // Update 'viewed' state if required by completion system.
 $completion = new completion_info($course);
 $completion->set_module_viewed($cm);
+
+// Stop processing here if page was requested via AJAX.
+if ($ajaxrequest) {
+    if (ob_get_contents()) {
+        ob_clean();
+    }
+    echo json_encode('');
+    die();
+}
 
 $PAGE->set_url('/mod/aspirelist/view.php', array('id' => $cm->id));
 
