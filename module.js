@@ -55,58 +55,60 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
         Y.one(arrowid).addClass('collapsed');
 
         Y.delegate('click', function(e) {
-            var linkhref = e.currentTarget.get('href'),
-                list = Y.one(listid),
-                arrow = Y.one(arrowid);
+            if (e.currentTarget.ancestor('div').hasClass('activityinstance')) {
+                var linkhref = e.currentTarget.get('href'),
+                    list = Y.one(listid),
+                    arrow = Y.one(arrowid);
 
-            // Add a JavaScript loading icon.
-            var spinner = M.util.add_spinner(Y, e.currentTarget.ancestor('div'));
-            spinner.removeClass('iconsmall');
-            spinner.setStyle('position', 'static');
+                // Add a JavaScript loading icon.
+                var spinner = M.util.add_spinner(Y, e.currentTarget.ancestor('div'));
+                spinner.removeClass('iconsmall');
+                spinner.setStyle('position', 'static');
 
-            if (linkhref === url) {
-                // Display the JS loading icon.
-                spinner.show();
+                if (linkhref === url) {
+                    // Display the JS loading icon.
+                    spinner.show();
 
-                if (arrow.hasClass('collapsed')) {
-                    // Send AJAX request for view.php (to trigger log/completion events).
-                    if (window.XMLHttpRequest) {
-                        httpRequest = new XMLHttpRequest();
-                    } else if (window.ActiveXObject) {
-                        try {
-                            httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-                        }
-                        catch (e) {
+                    if (arrow.hasClass('collapsed')) {
+                        // Send AJAX request for view.php (to trigger log/completion events).
+                        if (window.XMLHttpRequest) {
+                            httpRequest = new XMLHttpRequest();
+                        } else if (window.ActiveXObject) {
                             try {
-                                httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                                httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
                             }
-                            catch (e) {}
+                            catch (e) {
+                                try {
+                                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                                }
+                                catch (e) {}
+                            }
                         }
-                    }
-                    httpRequest.onreadystatechange = checkResponse;
-                    httpRequest.open('GET', url);
-                    httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
-                    httpRequest.send();
+                        httpRequest.onreadystatechange = checkResponse;
+                        httpRequest.open('GET', url);
+                        httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
+                        httpRequest.send();
 
-                    // Parse the response and check for errors.
-                    function checkResponse() {
-                        if (httpRequest.readyState === 4) {
-                            var data = Y.JSON.parse(httpRequest.responseText);
-                            if (data.hasOwnProperty('error')) { // Alert user if an error has occurred.
-                                alert(data.error);
-                            } else { // If all is well, expand the list.
-                                list.show('slideFadeIn');
-                                arrow.removeClass('collapsed');
-                                // Hide the JS loading icon.
-                                spinner.hide();
+                        // Parse the response and check for errors.
+                        function checkResponse() {
+                            if (httpRequest.readyState === 4) {
+                                var data = Y.JSON.parse(httpRequest.responseText);
+                                if (data.hasOwnProperty('error')) { // Alert user if an error has occurred.
+                                    alert(data.error);
+                                } else { // If all is well, expand the list.
+                                    list.show('slideFadeIn');
+                                    arrow.removeClass('collapsed');
+                                    // Hide the JS loading icon.
+                                    spinner.hide();
+                                }
                             }
                         }
+                    } else {
+                        list.hide('slideFadeOut');
+                        arrow.addClass('collapsed');
+                        // Hide the JS loading icon.
+                        spinner.hide();
                     }
-                } else {
-                    list.hide('slideFadeOut');
-                    arrow.addClass('collapsed');
-                    // Hide the JS loading icon.
-                    spinner.hide();
                 }
             }
 
