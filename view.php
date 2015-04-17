@@ -69,6 +69,8 @@ $params = array(
     'objectid' => $aspirelist->id
 );
 $event = \mod_aspirelist\event\course_module_viewed::create($params);
+$event->add_record_snapshot('course_modules', $cm);
+$event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('aspirelist', $aspirelist);
 $event->trigger();
 
