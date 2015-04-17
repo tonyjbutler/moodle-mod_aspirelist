@@ -210,15 +210,6 @@ class mod_aspirelist_mod_form extends moodleform_mod {
     public function validation($data, $files) {
         $errors = parent::validation($data, $files);
 
-        // Automatic on-view completion cannot work together with 'display inline' option.
-        if (empty($errors['completion']) &&
-                array_key_exists('completion', $data) &&
-                $data['completion'] == COMPLETION_TRACKING_AUTOMATIC &&
-                !empty($data['completionview']) &&
-                $data['display'] == ASPIRELIST_DISPLAY_INLINE) {
-            $errors['completion'] = get_string('noautocompletioninline', 'aspirelist');
-        }
-
         return $errors;
     }
 }

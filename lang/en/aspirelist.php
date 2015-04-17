@@ -68,7 +68,6 @@ $string['modulename_link'] = 'mod/aspirelist/view';
 $string['modulenameplural'] = 'Aspire resource lists';
 $string['modules'] = 'Modules';
 $string['noaspirelists'] = 'Sorry, there are no resource lists associated with this {$a}.';
-$string['noautocompletioninline'] = 'Automatic completion on viewing of activity can not be selected together with the "Display inline" option';
 $string['noconnection'] = 'Unfortunately the Talis Aspire website is currently unavailable. Please try again later.';
 $string['onlineresource'] = 'Online resource';
 $string['page-mod-aspirelist-view'] = 'Resource list module main page';
