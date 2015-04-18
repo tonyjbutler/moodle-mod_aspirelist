@@ -95,6 +95,7 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
                                 var data = Y.JSON.parse(httpRequest.responseText);
                                 if (data.hasOwnProperty('error')) { // Alert user if an error has occurred.
                                     alert(data.error);
+                                    window.location.href = url;
                                 } else { // If all is well, expand the list.
                                     list.show('slideFadeIn');
                                     arrow.removeClass('collapsed');
