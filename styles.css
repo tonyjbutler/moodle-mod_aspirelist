@@ -207,3 +207,7 @@ div.aspirelistbox ul.sectionitems li.listitem a.webbutton:hover {
     -webkit-transform: rotate(-90deg);
     transform: rotate(-90deg);
 }
+
+.section .activity.aspirelist .contentafterlink {
+    margin-top: 0;
+}
