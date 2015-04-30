@@ -84,11 +84,6 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
                                 catch (e) {}
                             }
                         }
-                        httpRequest.onreadystatechange = checkResponse;
-                        httpRequest.open('GET', url);
-                        httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
-                        httpRequest.send();
-
                         // Parse the response and check for errors.
                         function checkResponse() {
                             if (httpRequest.readyState === 4) {
@@ -104,6 +99,10 @@ M.mod_aspirelist.init_list = function(Y, cmid, url) {
                                 }
                             }
                         }
+                        httpRequest.onreadystatechange = checkResponse;
+                        httpRequest.open('GET', url);
+                        httpRequest.setRequestHeader('X-Requested-With', 'xmlhttprequest');
+                        httpRequest.send();
                     } else {
                         list.hide('slideFadeOut');
                         arrow.addClass('collapsed');
