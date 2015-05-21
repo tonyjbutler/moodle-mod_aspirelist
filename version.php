@@ -29,3 +29,4 @@ $plugin->requires  = 2014051200;       // Requires this Moodle version
 $plugin->component = 'mod_aspirelist'; // Full name of the plugin (used for diagnostics)
 $plugin->cron      = 0;
 $plugin->maturity  = MATURITY_ALPHA;
+$plugin->release   = 'dev';
