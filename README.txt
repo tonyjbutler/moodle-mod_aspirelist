@@ -35,6 +35,14 @@ Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 Changelog
 ---------
 
+2015-05-21  v2.9.0
+
+  * Add support for using course shortname as an Aspire code/year source
+  * Don't render 'Online resource' button for TADC digitised resources
+  * Enable views of lists displayed inline to trigger log events
+  * Allow automatic completion on view to be used with inline display
+  * Replace add_intro_editor with standard_intro_elements for Moodle 2.9
+
 2015-01-21  v2.7.3/2.6.5/2.5.5
 
   * Implement Moodle Universal Cache support for caching of resource list data
