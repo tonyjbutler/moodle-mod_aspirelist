@@ -35,6 +35,10 @@ Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 Changelog
 ---------
 
+2015-09-15  v2.9.1/2.7.4
+
+  * Bug fix to reflect change in list structure by Talis (GitHub issue #3)
+
 2015-05-21  v2.9.0
 
   * Add support for using course shortname as an Aspire code/year source
