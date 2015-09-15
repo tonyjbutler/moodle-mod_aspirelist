@@ -530,7 +530,7 @@ class aspirelist {
         $list->id = $listid;
 
         if ($list->xpath = $this->get_xpath($listid, $cached)) {
-            $namequery = '//h1[contains(@id, "pageTitle")]';
+            $namequery = '//h1[@id = "pageTitle"]';
             // We only want the main text content of the h1, not its sub-elements.
             $list->name = trim($this->get_dom_nodelist($list->xpath, $namequery, null, true)->firstChild->textContent);
         }
@@ -648,7 +648,7 @@ class aspirelist {
         $section->id = $sectionid ? $sectionid : $sectionnode->getAttribute('id');
 
         if (!$sectionnode) {
-            $nodequery = '//li[contains(@id, "' . $section->id . '")]';
+            $nodequery = '//li[@id = "' . $section->id . '"]';
             $sectionnode = $this->get_dom_nodelist($xpath, $nodequery, null, true);
         }
 
@@ -704,7 +704,7 @@ class aspirelist {
         $item->id = $itemid ? $itemid : $itemnode->getAttribute('id');
 
         if (!$itemnode) {
-            $nodequery = '//li[contains(@id, "' . $item->id . '")]';
+            $nodequery = '//li[@id = "' . $item->id . '"]';
             $itemnode = $this->get_dom_nodelist($xpath, $nodequery, null, true);
         }
 
