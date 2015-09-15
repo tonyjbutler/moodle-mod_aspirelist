@@ -32,6 +32,42 @@ The development of this module was based on previous work by the University of
 Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 
 
+Changelog
+---------
+
+2015-09-15  v2.9.1/2.7.4
+
+  * Bug fix to reflect change in list structure by Talis (GitHub issue #3)
+
+2015-05-21  v2.9.0
+
+  * Add support for using course shortname as an Aspire code/year source
+  * Don't render 'Online resource' button for TADC digitised resources
+  * Enable views of lists displayed inline to trigger log events
+  * Allow automatic completion on view to be used with inline display
+  * Replace add_intro_editor with standard_intro_elements for Moodle 2.9
+
+2015-01-21  v2.7.3/2.6.5/2.5.5
+
+  * Implement Moodle Universal Cache support for caching of resource list data
+
+2014-10-30  v2.7.2/2.6.4/2.5.4
+
+  * Animate showing/hiding of lists and use arrow icon to indicate visibility
+  * Add option to include Aspire codes from meta linked child courses
+  * Fix styles for config form display on mobile devices
+  * Display individual lists in separate collapsible fieldsets in config form
+  * Add support for multiple Aspire code matches in idnumber string
+  * Fix HTML rendering for single-item sections
+
+2014-08-03  v2.7.1/2.6.3/2.5.3
+
+  * Add admin config setting for default list display mode
+  * Support loose resource items not contained within a list section
+  * Update styles to work better with both Bootstrap and standard themes
+  * Use ID number as fallback code source if no code found in custom table
+
+
 Installation
 ------------
 
