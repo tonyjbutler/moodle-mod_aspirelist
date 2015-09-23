@@ -414,7 +414,7 @@ class aspirelist {
         if ($adminconfig->codesource == 'idnumber' || empty($codes)) {
             if ($coderegex = $adminconfig->coderegex) {
                 preg_match_all($coderegex, $course->idnumber, $codes, PREG_PATTERN_ORDER);
-                $codes = $codes[0];
+                $codes = (!empty($codes[1])) ? $codes[1] : $codes[0];
             } else {
                 $codes = array($course->idnumber);
             }
@@ -429,7 +429,7 @@ class aspirelist {
             }
         }
 
-        return array_unique($codes);
+        return array_unique(array_filter($codes));
     }
 
     /**
@@ -468,7 +468,7 @@ class aspirelist {
         $year = false;
         if ($yearregex = $adminconfig->yearregex) {
             if (preg_match($yearregex, $course->idnumber, $year)) {
-                $year = $year[0];
+                $year = (!empty($year[1])) ? $year[1] : $year[0];
             }
         }
 
