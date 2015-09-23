@@ -35,6 +35,10 @@ Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 Changelog
 ---------
 
+2015-09-23  v2.6.7
+
+  * Bug fix to reflect change in list structure by Talis (GitHub issue #3)
+
 2015-09-23  v2.9.2/2.7.6/2.6.7
 
   * Fix pattern matching where capturing groups are specified in regex
