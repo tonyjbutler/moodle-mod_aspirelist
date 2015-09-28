@@ -770,12 +770,14 @@ class aspirelist {
                 $item->studynote = '';
             }
 
-            $buttonquery = '../../div/div[contains(@class, "item-actions")]/div/div/p/a[contains(@class, "btnWebLink")'
-                    . ' and not(contains(@class, "btnDigitisation"))]';
+            $buttonquery = '../../div/div[contains(@class, "item-actions")]/div/div/p/a[contains(@class, "btnWebLink")]';
             $webbutton = $this->get_dom_nodelist($xpath, $buttonquery, $itemdetails, true);
             if ($webbutton) {
                 $buttonlabel = get_string('onlineresource', 'aspirelist');
-                $buttonhref = $adminconfig->aspireurl . '/' . $webbutton->getAttribute('href');
+                $buttonhref = $webbutton->getAttribute('href');
+                if (strpos($buttonhref, '/') === 0) {
+                    $buttonhref = $adminconfig->aspireurl . $buttonhref;
+                }
                 $buttontitle = $item->name;
                 $buttonaction = new popup_action('click', $buttonhref, 'popup', array('width' => 1024, 'height' => 768));
                 $item->webbutton = $OUTPUT->action_link($buttonhref, $buttonlabel, $buttonaction,
