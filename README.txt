@@ -35,6 +35,10 @@ Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 Changelog
 ---------
 
+2015-09-28  v2.9.3/2.7.7/2.6.8
+
+  * Fix buggy link for TADC digitised resources and reinstate button
+
 2015-09-23  v2.6.7
 
   * Bug fix to reflect change in list structure by Talis (GitHub issue #3)
