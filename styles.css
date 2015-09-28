@@ -116,7 +116,7 @@ div.aspirelistbox div.sectionnote {
 
 #page-mod-aspirelist-view ul.sectionitems, div.aspirelistbox ul.sectionitems {
     margin-left: 1em;
-    list-style-type: none;
+    list-style-type: none !important;
 }
 
 #page-mod-aspirelist-view ul.sectionitems li.listitem, div.aspirelistbox ul.sectionitems li.listitem {
