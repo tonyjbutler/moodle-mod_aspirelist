@@ -156,12 +156,12 @@ class mod_aspirelist_mod_form extends moodleform_mod {
     private function setup_section_elements(&$mform, &$checkboxgrp, $xpath, $section, $headinglevel = 3) {
         global $OUTPUT;
 
+        // Don't let heading level exceed 6.
+        $headinglevel = $headinglevel <= 6 ? $headinglevel : 6;
+
         $countspan = html_writer::tag('span', '(' . $section->itemcount . ')', array('class' => 'itemcount dimmed_text'));
         $heading = $OUTPUT->heading($section->name . ' ' . $countspan, $headinglevel, 'sectionheading', $section->id);
         $mform->addElement('html', $heading . $section->note);
-
-        // Don't let heading level exceed 6.
-        $headinglevel = $headinglevel <= 6 ? $headinglevel : 6;
 
         // Remember that this was a section heading.
         $wassection = true;
