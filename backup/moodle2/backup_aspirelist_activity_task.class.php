@@ -61,7 +61,7 @@ class backup_aspirelist_activity_task extends backup_activity_task {
         $search="/(".$base."\/mod\/aspirelist\/index.php\?id\=)([0-9]+)/";
         $content= preg_replace($search, '$@ASPIRELISTINDEX*$2@$', $content);
 
-        // Link to choice view by moduleid
+        // Link to aspirelist view by moduleid
         $search="/(".$base."\/mod\/aspirelist\/view.php\?id\=)([0-9]+)/";
         $content= preg_replace($search, '$@ASPIRELISTVIEWBYID*$2@$', $content);
 
