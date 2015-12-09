@@ -32,6 +32,10 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('aspirelist/requiremodintro', get_string('requiremodintro', 'aspirelist'),
             get_string('configrequiremodintro', 'aspirelist'), 0));
 
+    // Authors in module config form.
+    $settings->add(new admin_setting_configcheckbox('aspirelist/authorsinconfig', get_string('authorsinconfig', 'aspirelist'),
+            get_string('configauthorsinconfig', 'aspirelist'), 0));
+
     // Display settings.
     $optionsdd = array();
     $optionsdd[0] = get_string('displaypage', 'aspirelist');
