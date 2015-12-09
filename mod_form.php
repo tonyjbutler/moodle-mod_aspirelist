@@ -191,6 +191,8 @@ class mod_aspirelist_mod_form extends moodleform_mod {
     }
 
     private function setup_item_elements(&$mform, &$checkboxgrp, $item) {
+        $adminconfig = $this->aspirelist->get_admin_config();
+
         // Pre-select previously selected list items if this is an update.
         if ($config = $this->aspirelist->get_instance_config()) {
             $items = explode(',', $config);
@@ -203,7 +205,8 @@ class mod_aspirelist_mod_form extends moodleform_mod {
             $default = 0;
         }
 
-        $mform->addElement('advcheckbox', $item->path, $item->link . $item->formats, null, array('group' => $checkboxgrp - 1));
+        $itemdetails = !empty($adminconfig->authorsinconfig) ? $item->authors . $item->formats : $item->formats;
+        $mform->addElement('advcheckbox', $item->path, $item->link . $itemdetails, null, array('group' => $checkboxgrp - 1));
         $mform->setDefault($item->path, $default);
     }
 
