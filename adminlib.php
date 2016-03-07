@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -46,7 +45,7 @@ class aspirelist_codesource_setting extends admin_setting_configselect {
     public function validate($data) {
         $result = parent::validate($data);
         if ($result !== true) {
-           return $result;
+            return $result;
         }
 
         $codetable = get_config('aspirelist', 'codetable');
@@ -83,7 +82,7 @@ class aspirelist_codetable_setting extends admin_setting_configtext {
     public function validate($data) {
         $result = parent::validate($data);
         if ($result !== true) {
-           return $result;
+            return $result;
         }
 
         $codesource = get_config('aspirelist', 'codesource');
@@ -115,7 +114,7 @@ class aspirelist_codecolumn_setting extends admin_setting_configtext {
     public function validate($data) {
         $result = parent::validate($data);
         if ($result !== true) {
-           return $result;
+            return $result;
         }
 
         $codesource = get_config('aspirelist', 'codesource');
@@ -147,7 +146,7 @@ class aspirelist_coursecolumn_setting extends admin_setting_configtext {
     public function validate($data) {
         $result = parent::validate($data);
         if ($result !== true) {
-           return $result;
+            return $result;
         }
 
         $codesource = get_config('aspirelist', 'codesource');
@@ -179,7 +178,7 @@ class aspirelist_courseattribute_setting extends admin_setting_configtext {
     public function validate($data) {
         $result = parent::validate($data);
         if ($result !== true) {
-           return $result;
+            return $result;
         }
 
         $codesource = get_config('aspirelist', 'codesource');

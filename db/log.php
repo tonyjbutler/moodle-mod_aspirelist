@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -27,8 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $logs = array(
-    array('module'=>'aspirelist', 'action'=>'view', 'mtable'=>'aspirelist', 'field'=>'name'),
-    array('module'=>'aspirelist', 'action'=>'view all', 'mtable'=>'aspirelist', 'field'=>'name'),
-    array('module'=>'aspirelist', 'action'=>'update', 'mtable'=>'aspirelist', 'field'=>'name'),
-    array('module'=>'aspirelist', 'action'=>'add', 'mtable'=>'aspirelist', 'field'=>'name'),
+    array('module' => 'aspirelist', 'action' => 'view', 'mtable' => 'aspirelist', 'field' => 'name'),
+    array('module' => 'aspirelist', 'action' => 'view all', 'mtable' => 'aspirelist', 'field' => 'name'),
+    array('module' => 'aspirelist', 'action' => 'update', 'mtable' => 'aspirelist', 'field' => 'name'),
+    array('module' => 'aspirelist', 'action' => 'add', 'mtable' => 'aspirelist', 'field' => 'name'),
 );

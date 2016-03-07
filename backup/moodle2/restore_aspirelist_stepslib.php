@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -35,7 +34,7 @@ class restore_aspirelist_activity_structure_step extends restore_activity_struct
         $paths = array();
         $paths[] = new restore_path_element('aspirelist', '/activity/aspirelist');
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
@@ -47,14 +46,14 @@ class restore_aspirelist_activity_structure_step extends restore_activity_struct
         $data->course = $this->get_courseid();
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 
-        // insert the aspirelist record
+        // Insert the aspirelist record.
         $newitemid = $DB->insert_record('aspirelist', $data);
-        // immediately after inserting "activity" record, call this
+        // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
 
     protected function after_execute() {
-        // Add aspirelist related files, no need to match by itemname (just internally handled context)
+        // Add aspirelist related files, no need to match by itemname (just internally handled context).
         $this->add_related_files('mod_aspirelist', 'intro', null);
     }
 }

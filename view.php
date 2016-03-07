@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -53,7 +52,7 @@ if ($a) {  // Two ways to specify the module.
     $aspirelist = $DB->get_record('aspirelist', array('id' => $cm->instance), '*', MUST_EXIST);
 }
 
-$course = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);
+$course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
 
 require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
