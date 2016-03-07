@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -58,16 +57,16 @@ class mod_aspirelist_mod_form extends moodleform_mod {
             if (!$ctx) {
                 $ctx = context_course::instance($this->current->course);
             }
-            $course = $DB->get_record('course', array('id'=>$this->current->course), '*', MUST_EXIST);
+            $course = $DB->get_record('course', array('id' => $this->current->course), '*', MUST_EXIST);
             $this->aspirelist->set_course($course);
         }
 
         $config = get_config('aspirelist');
 
-        //-------------------------------------------------------
+        // General section.
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
-        $mform->addElement('text', 'name', get_string('aspirelistname', 'aspirelist'), array('size'=>'64'));
+        $mform->addElement('text', 'name', get_string('aspirelistname', 'aspirelist'), array('size' => '64'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
@@ -78,7 +77,7 @@ class mod_aspirelist_mod_form extends moodleform_mod {
 
         $this->standard_intro_elements();
 
-        //-------------------------------------------------------
+        // Resource selection section.
         if ($this->aspirelist->test_connection()) {
             if ($lists = $this->aspirelist->get_lists($course)) {
                 $this->setup_list_elements($mform, $lists);
@@ -92,7 +91,7 @@ class mod_aspirelist_mod_form extends moodleform_mod {
             $mform->addElement('html', $noconnection);
         }
 
-        //-------------------------------------------------------
+        // Appearance section.
         $mform->addElement('header', 'appearance', get_string('appearance'));
         $mform->setExpanded('appearance', true);
 
@@ -102,10 +101,10 @@ class mod_aspirelist_mod_form extends moodleform_mod {
         $mform->addHelpButton('display', 'display', 'aspirelist');
         $mform->setDefault('display', $config->defaultdisplay);
 
-        //-------------------------------------------------------
+        // Common elements section.
         $this->standard_coursemodule_elements();
 
-        //-------------------------------------------------------
+        // Form action buttons.
         $this->add_action_buttons();
     }
 

@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -37,18 +36,29 @@ define('ASPIRELIST_DISPLAY_INLINE', 1);
  */
 function aspirelist_supports($feature) {
     switch($feature) {
-        case FEATURE_MOD_ARCHETYPE:           return MOD_ARCHETYPE_RESOURCE;
-        case FEATURE_GROUPS:                  return false;
-        case FEATURE_GROUPINGS:               return false;
-        case FEATURE_GROUPMEMBERSONLY:        return true;
-        case FEATURE_MOD_INTRO:               return true;
-        case FEATURE_COMPLETION_TRACKS_VIEWS: return true;
-        case FEATURE_GRADE_HAS_GRADE:         return false;
-        case FEATURE_GRADE_OUTCOMES:          return false;
-        case FEATURE_BACKUP_MOODLE2:          return true;
-        case FEATURE_SHOW_DESCRIPTION:        return true;
+        case FEATURE_MOD_ARCHETYPE:
+            return MOD_ARCHETYPE_RESOURCE;
+        case FEATURE_GROUPS:
+            return false;
+        case FEATURE_GROUPINGS:
+            return false;
+        case FEATURE_GROUPMEMBERSONLY:
+            return true;
+        case FEATURE_MOD_INTRO:
+            return true;
+        case FEATURE_COMPLETION_TRACKS_VIEWS:
+            return true;
+        case FEATURE_GRADE_HAS_GRADE:
+            return false;
+        case FEATURE_GRADE_OUTCOMES:
+            return false;
+        case FEATURE_BACKUP_MOODLE2:
+            return true;
+        case FEATURE_SHOW_DESCRIPTION:
+            return true;
 
-        default: return null;
+        default:
+            return null;
     }
 }
 
@@ -101,7 +111,7 @@ function aspirelist_add_instance($data, $mform) {
     $data->items = $aspirelist->get_items_list($data);
     $data->id = $DB->insert_record('aspirelist', $data);
 
-    $DB->set_field('course_modules', 'instance', $data->id, array('id'=>$cmid));
+    $DB->set_field('course_modules', 'instance', $data->id, array('id' => $cmid));
 
     return $data->id;
 }
@@ -135,13 +145,13 @@ function aspirelist_update_instance($data, $mform) {
 function aspirelist_delete_instance($id) {
     global $DB;
 
-    if (!$aspirelist = $DB->get_record('aspirelist', array('id'=>$id))) {
+    if (!$aspirelist = $DB->get_record('aspirelist', array('id' => $id))) {
         return false;
     }
 
     // Note: all context files are deleted automatically.
 
-    $DB->delete_records('aspirelist', array('id'=>$aspirelist->id));
+    $DB->delete_records('aspirelist', array('id' => $aspirelist->id));
 
     return true;
 }
@@ -153,8 +163,8 @@ function aspirelist_delete_instance($id) {
  * @param stdClass $currentcontext Current context of block
  */
 function aspirelist_page_type_list($pagetype, $parentcontext, $currentcontext) {
-    $module_pagetype = array('mod-aspirelist-*'=>get_string('page-mod-aspirelist-x', 'aspirelist'));
-    return $module_pagetype;
+    $modulepagetype = array('mod-aspirelist-*' => get_string('page-mod-aspirelist-x', 'aspirelist'));
+    return $modulepagetype;
 }
 
 /**

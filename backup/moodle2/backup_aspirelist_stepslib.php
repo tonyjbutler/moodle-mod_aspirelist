@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -32,26 +31,26 @@ class backup_aspirelist_activity_structure_step extends backup_activity_structur
 
     protected function define_structure() {
 
-        // To know if we are including userinfo
+        // To know if we are including userinfo.
         $userinfo = $this->get_setting_value('userinfo');
 
-        // Define each element separated
+        // Define each element separated.
         $aspirelist = new backup_nested_element('aspirelist', array('id'), array('name', 'intro', 'introformat',
             'timemodified', 'display', 'items'));
 
         // Build the tree
-        // (nice mono-tree, lol)
+        // (nice mono-tree, lol).
 
-        // Define sources
+        // Define sources.
         $aspirelist->set_source_table('aspirelist', array('id' => backup::VAR_ACTIVITYID));
 
         // Define id annotations
-        // (none)
+        // (none).
 
-        // Define file annotations
+        // Define file annotations.
         $aspirelist->annotate_files('mod_aspirelist', 'intro', null);
 
-        // Return the root element (aspirelist), wrapped into standard activity structure
+        // Return the root element (aspirelist), wrapped into standard activity structure.
         return $this->prepare_activity_structure($aspirelist);
     }
 }
