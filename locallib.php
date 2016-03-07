@@ -561,7 +561,7 @@ class aspirelist {
                 return null;
             }
         }
-        $doc->loadHTML($list);
+        @$doc->loadHTML($list);
 
         return new DOMXPath($doc);
     }
