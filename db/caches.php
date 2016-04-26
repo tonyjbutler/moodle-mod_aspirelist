@@ -19,8 +19,9 @@
  *
  * @package    mod_aspirelist
  * @category   cache
- * @copyright  2015 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
 $definitions = array(

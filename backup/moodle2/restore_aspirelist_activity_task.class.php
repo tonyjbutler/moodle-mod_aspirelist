@@ -16,8 +16,9 @@
 
 /**
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
 defined('MOODLE_INTERNAL') || die();

@@ -18,8 +18,9 @@
  * Aspirelist configuration form
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -30,8 +31,10 @@ require_once($CFG->dirroot . '/mod/aspirelist/locallib.php');
 /**
  * Settings form for the aspirelist module
  *
- * @copyright 2014 Lancaster University {@link http://www.lancaster.ac.uk/}
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    mod_aspirelist
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class mod_aspirelist_mod_form extends moodleform_mod {
 
