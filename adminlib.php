@@ -18,8 +18,9 @@
  * Aspirelist module admin lib
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
 defined('MOODLE_INTERNAL') || die;
@@ -28,8 +29,9 @@ defined('MOODLE_INTERNAL') || die;
  * Admin setting for code source, adds validation.
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class aspirelist_codesource_setting extends admin_setting_configselect {
 
@@ -65,8 +67,9 @@ class aspirelist_codesource_setting extends admin_setting_configselect {
  * Admin setting for code table, adds validation.
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class aspirelist_codetable_setting extends admin_setting_configtext {
 
@@ -97,8 +100,9 @@ class aspirelist_codetable_setting extends admin_setting_configtext {
  * Admin setting for code column, adds validation.
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class aspirelist_codecolumn_setting extends admin_setting_configtext {
 
@@ -129,8 +133,9 @@ class aspirelist_codecolumn_setting extends admin_setting_configtext {
  * Admin setting for course column, adds validation.
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class aspirelist_coursecolumn_setting extends admin_setting_configtext {
 
@@ -161,8 +166,9 @@ class aspirelist_coursecolumn_setting extends admin_setting_configtext {
  * Admin setting for course attribute, adds validation.
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University {@link http://www.lancaster.ac.uk/}
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class aspirelist_courseattribute_setting extends admin_setting_configtext {
 

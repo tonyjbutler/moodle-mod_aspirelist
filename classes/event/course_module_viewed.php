@@ -18,8 +18,9 @@
  * The mod_aspirelist course module viewed event.
  *
  * @package    mod_aspirelist
- * @copyright  2014 Lancaster University (http://www.lancaster.ac.uk/)
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 
 namespace mod_aspirelist\event;
@@ -31,8 +32,9 @@ defined('MOODLE_INTERNAL') || die();
  *
  * @package    mod_aspirelist
  * @since      Moodle 2.7
- * @copyright  2014 Lancaster University (http://www.lancaster.ac.uk/)
+ * @copyright  2014 onwards Lancaster University {@link http://www.lancaster.ac.uk/}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @author     Tony Butler <a.butler4@lancaster.ac.uk>
  */
 class course_module_viewed extends \core\event\course_module_viewed {
 
