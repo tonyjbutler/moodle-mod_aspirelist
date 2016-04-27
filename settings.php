@@ -43,9 +43,13 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configselect('aspirelist/defaultdisplay', get_string('defaultdisplay', 'aspirelist'),
             get_string('configdefaultdisplay', 'aspirelist'), 'displaypage', $optionsdd));
 
-    // Talis Aspire URL.
+    // Aspire URL.
     $settings->add(new admin_setting_configtext('aspirelist/aspireurl', get_string('aspireurl', 'aspirelist'),
             get_string('configaspireurl', 'aspirelist'), 'http://', PARAM_URL));
+
+    // Aspire URL HTTPS alias.
+    $settings->add(new admin_setting_configtext('aspirelist/aspireurlhttpsalias', get_string('aspireurlhttpsalias', 'aspirelist'),
+            get_string('configaspireurlhttpsalias', 'aspirelist'), 'https://', PARAM_URL));
 
     // Knowledge group.
     $optionskg = array();
