@@ -337,10 +337,24 @@ class aspirelist {
         }
         $this->adminconfig = get_config('aspirelist');
 
-        // Remove anything after the domain name in Aspire URL.
-        $slashpos = strpos($this->adminconfig->aspireurl, '/', 8);
+        // Clean up Aspire URL if necessary.
+        $baseurl = trim(str_ireplace(array('http://', 'https://'), '', $this->adminconfig->aspireurl), '/');
+        $slashpos = strpos($baseurl, '/');
         if ($slashpos !== false) {
-            $this->adminconfig->aspireurl = substr_replace($this->adminconfig->aspireurl, '', $slashpos);
+            $baseurl = substr_replace($baseurl, '', $slashpos);
+        }
+        $this->adminconfig->aspireurl = 'http://' . $baseurl;
+
+        // Clean up Aspire URL HTTPS alias if necessary.
+        if (!empty($this->adminconfig->aspireurlhttpsalias) && $this->adminconfig->aspireurlhttpsalias != 'https//') {
+            $basealias = trim(str_ireplace(array('http://', 'https://'), '', $this->adminconfig->aspireurlhttpsalias), '/');
+            $slashpos = strpos($basealias, '/');
+            if ($slashpos !== false) {
+                $basealias = substr_replace($basealias, '', $slashpos);
+            }
+            $this->adminconfig->aspireurlhttpsalias = 'https://' . $basealias;
+        } else {
+            $this->adminconfig->aspireurlhttpsalias = '';
         }
 
         // Remove database prefix from Aspire code table name if present.
@@ -358,13 +372,17 @@ class aspirelist {
      */
     public function test_connection() {
         $adminconfig = $this->get_admin_config();
-        $aspirehost = str_replace(array('http://', 'https://'), '', $adminconfig->aspireurl);
+
+        if (!$aspirehost = str_replace('http://', '', $adminconfig->aspireurl)) {
+            mtrace('Error: config setting "aspirelist | aspireurl" empty or misconfigured<br>');
+        }
 
         if ($connection = @fsockopen($aspirehost, 80, $errno, $errstr)) {
             fclose($connection);
             return true;
         }
-        echo 'Error <strong>' . $errno . ': ' . $errstr . '</strong> attempting to connect to host ' . $aspirehost;
+
+        mtrace('Error "' . $errno . ': ' . $errstr . '" encountered when attempting to connect to host ' . $aspirehost);
 
         return false;
     }
