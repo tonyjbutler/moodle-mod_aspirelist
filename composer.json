@@ -1,0 +1,11 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/talis/persona-php-client"
+        }
+    ],
+    "require": {
+        "talis/persona-php-client": ">=2.0.1"
+    }
+}
