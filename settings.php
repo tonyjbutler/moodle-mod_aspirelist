@@ -95,4 +95,18 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configcheckbox('aspirelist/includechildcodes', get_string('includechildcodes', 'aspirelist'),
             get_string('includechildcodes_desc', 'aspirelist'), 0));
 
+    // Talis Persona settings.
+    $settings->add(new admin_setting_heading('aspirelist/persona', get_string('personasettings', 'aspirelist'),
+            get_string('personasettings_desc', 'aspirelist')));
+
+    // Persona client config.
+    $settings->add(new admin_setting_configtext('aspirelist/personaclientid', get_string('personaclientid', 'aspirelist'),
+            '', '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/personaclientsecret', get_string('personaclientsecret', 'aspirelist'),
+            '', '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/personahost', get_string('personahost', 'aspirelist'),
+            get_string('personahost_desc', 'aspirelist'), 'https://users.talis.com', PARAM_URL));
+    $settings->add(new admin_setting_configtext('aspirelist/personaoauthroute', get_string('personaoauthroute', 'aspirelist'),
+            get_string('personaoauthroute_desc', 'aspirelist'), '/oauth/tokens', PARAM_TEXT));
+
 }
