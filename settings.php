@@ -109,4 +109,13 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('aspirelist/personaoauthroute', get_string('personaoauthroute', 'aspirelist'),
             get_string('personaoauthroute_desc', 'aspirelist'), '/oauth/tokens', PARAM_TEXT));
 
+    // Talis RL API settings.
+    $settings->add(new admin_setting_heading('aspirelist/rlapi', get_string('rlapisettings', 'aspirelist'), ''));
+    $settings->add(new admin_setting_configtext('aspirelist/rlapiurl', get_string('rlapiurl', 'aspirelist'),
+            get_string('rlapiurl_desc', 'aspirelist'), 'https://rl.talis.com', PARAM_URL));
+    $settings->add(new admin_setting_configselect('aspirelist/rlapiversion', get_string('rlapiversion', 'aspirelist'),
+            get_string('rlapiversion_desc', 'aspirelist'), '2', array('2', '3')));
+    $settings->add(new admin_setting_configtext('aspirelist/tenantcode', get_string('tenantcode', 'aspirelist'),
+            get_string('tenantcode_desc', 'aspirelist'), '', PARAM_TEXT));
+
 }
