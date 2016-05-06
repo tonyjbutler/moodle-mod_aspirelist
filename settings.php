@@ -39,7 +39,7 @@ if ($ADMIN->fulltree) {
     $optionsdd[0] = get_string('displaypage', 'aspirelist');
     $optionsdd[1] = get_string('displayinline', 'aspirelist');
     $settings->add(new admin_setting_configselect('aspirelist/defaultdisplay', get_string('defaultdisplay', 'aspirelist'),
-            get_string('defaultdisplay_desc', 'aspirelist'), 'displaypage', $optionsdd));
+            get_string('defaultdisplay_desc', 'aspirelist'), 0, $optionsdd));
 
     // Authors in module config form.
     $settings->add(new admin_setting_configcheckbox('aspirelist/authorsinconfig', get_string('authorsinconfig', 'aspirelist'),
@@ -114,7 +114,7 @@ if ($ADMIN->fulltree) {
     $settings->add(new admin_setting_configtext('aspirelist/rlapiurl', get_string('rlapiurl', 'aspirelist'),
             get_string('rlapiurl_desc', 'aspirelist'), 'https://rl.talis.com', PARAM_URL));
     $settings->add(new admin_setting_configselect('aspirelist/rlapiversion', get_string('rlapiversion', 'aspirelist'),
-            get_string('rlapiversion_desc', 'aspirelist'), '2', array('2', '3')));
+            get_string('rlapiversion_desc', 'aspirelist'), 2, array(2 => '2', 3 => '3')));
     $settings->add(new admin_setting_configtext('aspirelist/tenantcode', get_string('tenantcode', 'aspirelist'),
             get_string('tenantcode_desc', 'aspirelist'), '', PARAM_TEXT));
 

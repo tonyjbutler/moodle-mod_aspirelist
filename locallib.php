@@ -25,6 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+define('RL_API_GET_LIST', 'lists');
+define('RL_API_GET_ITEM', 'items');
+
 require_once($CFG->dirroot . '/mod/aspirelist/lib.php');
 
 /**
@@ -84,6 +87,12 @@ class aspirelist {
 
     /** @var string Regular expression matching an aspirelist item ID */
     private $itemidregex = '/^item-[A-F0-9\-]{36}$/';
+
+    /** @var \Talis\Persona\Client\Tokens A Talis Persona client instance */
+    private $personaclient;
+
+    /** @var array OAuth 2.0 token obtained from Talis Persona for RL API access */
+    private $apitoken;
 
     /**
      * Constructor for the base aspirelist class.
@@ -335,7 +344,9 @@ class aspirelist {
         if ($this->adminconfig) {
             return $this->adminconfig;
         }
+
         $this->adminconfig = get_config('aspirelist');
+        $this->adminconfig->version = get_config('mod_aspirelist')->version;
 
         // Clean up Aspire URL if necessary.
         $baseurl = trim(str_ireplace(array('http://', 'https://'), '', $this->adminconfig->aspireurl), '/');
@@ -374,7 +385,7 @@ class aspirelist {
         $adminconfig = $this->get_admin_config();
 
         if (!$aspirehost = str_replace('http://', '', $adminconfig->aspireurl)) {
-            mtrace('Error: config setting "aspirelist | aspireurl" empty or misconfigured<br>');
+            mtrace('Error: ' . get_string('settingnotconfigured', 'aspirelist', 'aspireurl'));
         }
 
         if ($connection = @fsockopen($aspirehost, 80, $errno, $errstr)) {
@@ -383,6 +394,178 @@ class aspirelist {
         }
 
         mtrace('Error "' . $errno . ': ' . $errstr . '" encountered when attempting to connect to host ' . $aspirehost);
+
+        return false;
+    }
+
+    /**
+     * Check whether Talis Persona and the RL API have been fully configured.
+     *
+     * @return boolean True if fully configured, else false
+     */
+    private function is_api_configured() {
+        $adminconfig = $this->get_admin_config();
+
+        $settings = array(
+            'personaclientid',
+            'personaclientsecret',
+            'personahost',
+            'personaoauthroute',
+            'rlapiurl',
+            'rlapiversion',
+            'tenantcode'
+        );
+        $message = array();
+
+        foreach ($settings as $setting) {
+            if (empty($adminconfig->$setting)) {
+                $message[] = get_string('settingmisconfigured', 'aspirelist', $setting);
+            }
+        }
+
+        if (!empty($message)) {
+            $message[] = get_string('rlapinotconfigured', 'aspirelist');
+            debugging(implode('<br>', $message));
+            return false;
+        }
+
+        // Finally, make sure we have a valid API token.
+        return $this->is_token_valid();
+    }
+
+    /**
+     * Create or retrieve a Talis Persona client instance for API token requests.
+     *
+     * @return \Talis\Persona\Client\Tokens The client instance
+     */
+    private function get_persona_client() {
+        if ($this->personaclient) {
+            return $this->personaclient;
+        }
+
+        require_once('vendor/autoload.php');
+
+        $adminconfig = $this->get_admin_config();
+
+        // Create a Talis Persona client instance.
+        $this->personaclient = new Talis\Persona\Client\Tokens(array(
+            'persona_host' => $adminconfig->personahost,
+            'persona_oauth_route' => $adminconfig->personaoauthroute,
+            'userAgent' => 'moodle-mod_aspirelist/' . $adminconfig->version,
+        ));
+
+        return $this->personaclient;
+    }
+
+    /**
+     * Request an OAuth 2.0 token from Talis Persona for access to the RL API.
+     *
+     * @return array|bool The new token, or false if unable to obtain one
+     */
+    private function get_api_token() {
+        require_once('vendor/autoload.php');
+
+        $adminconfig = $this->get_admin_config();
+        $personaclient = $this->get_persona_client();
+
+        // Request the new token.
+        if (!$this->apitoken = $personaclient->obtainNewToken($adminconfig->personaclientid, $adminconfig->personaclientsecret)) {
+            debugging('Unable to obtain an API token. Check your Talis Persona configuration.');
+            return false;
+        }
+
+        return $this->apitoken;
+    }
+
+    /**
+     * Validate an OAuth 2.0 token obtained from Talis Persona.
+     *
+     * @return bool Whether or not the token is valid
+     */
+    private function is_token_valid() {
+        require_once('vendor/autoload.php');
+
+        $personaclient = $this->get_persona_client();
+
+        // Attempt to validate existing token.
+        if ($this->apitoken && $personaclient->validateToken(array('access_token' => $this->apitoken['access_token']))) {
+            return true;
+        }
+
+        // Try fetching a new token from Persona.
+        if (!$this->apitoken = $this->get_api_token()) {
+            return false;
+        }
+
+        if (!$personaclient->validateToken(array('access_token' => $this->apitoken['access_token']))) {
+            debugging('Unable to validate API token. Check your Talis Persona configuration.');
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Call a specified Talis Reading Lists API method, passing the parameters provided.
+     *
+     * @param string $method RL API method to call
+     * @param string $listid GUID of required list
+     * @param string $itemid GUID of required list item
+     * @param array $params Array of additional params to pass
+     * @return mixed|bool A decoded JSON string, or false
+     */
+    private function call_api($method = RL_API_GET_LIST, $listid, $itemid = '', $params = array()) {
+
+        // Make sure we have the required data.
+        if (empty($listid) || ($method == RL_API_GET_ITEM && empty($itemid))) {
+            $itemreq = ($method == RL_API_GET_ITEM) ? 'and item ID ' : '';
+            debugging('Insufficient data to call API method "' . $method . '". List ID ' . $itemreq . 'required.');
+            return false;
+        }
+
+        global $CFG;
+        require_once($CFG->libdir . '/filelib.php');
+
+        $adminconfig = $this->get_admin_config();
+        $path = $adminconfig->rlapiversion . '/' . $adminconfig->tenantcode . '/lists/' . $listid . '/';
+        if ($method == 'items') {
+            $path .= 'items/' . $itemid;
+        }
+
+        // Prepare cURL request data.
+        $curl = new curl;
+        $header = array(
+            'Authorization: Bearer ' . $this->apitoken['access_token']
+        );
+        $options = array(
+            'CURLOPT_RETURNTRANSFER' => true,
+            'CURLOPT_HEADER'         => false,
+            'CURLOPT_FOLLOWLOCATION' => true
+        );
+        $curl->setHeader($header);
+        $curl->setopt($options);
+        $url = new moodle_url($adminconfig->rlapiurl . '/' . $path);
+
+        // Submit request to RL API.
+        $response = $curl->get($url->out(), $params);
+
+        // Check response and log any errors.
+        $curlinfo = $curl->get_info();
+        $json = json_decode($response);
+
+        // If all is well, return data.
+        if ($curlinfo['http_code'] == 200 && !empty($json)) {
+            return $json;
+        }
+
+        // Check for invalid JSON and API errors.
+        if (empty($json)) {
+            debugging('Invalid JSON string', DEBUG_DEVELOPER);
+        } else {
+            debugging('Unknown error', DEBUG_DEVELOPER);
+        }
+        debugging('HTTP code: ' . $curlinfo['http_code'], DEBUG_DEVELOPER);
+        debugging('API response: ' . $response, DEBUG_DEVELOPER);
 
         return false;
     }
@@ -548,7 +731,9 @@ class aspirelist {
 
         $list->id = $listid;
 
-        if ($list->xpath = $this->get_xpath($listid, $cached)) {
+        if ($this->is_api_configured()) {
+            $this->call_api(RL_API_GET_LIST, $listid, '', array('draft' => 1, 'history' => 1));
+        } else if ($list->xpath = $this->get_xpath($listid, $cached)) {
             $namequery = '//h1[@id = "pageTitle"]';
             // We only want the main text content of the h1, not its sub-elements.
             $list->name = trim($this->get_dom_nodelist($list->xpath, $namequery, null, true)->firstChild->textContent);
