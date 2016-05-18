@@ -759,11 +759,12 @@ class aspirelist {
      */
     private function get_list_data($listid, $cached = false) {
         $list = new stdClass();
-
         $list->id = $listid;
 
-        if ($this->is_api_configured()) {
-            $this->call_api(RL_API_GET_LIST, $listid, '', array('draft' => 1, 'history' => 1));
+        // Attempt to call the RL API, otherwise fall back on screen scraping.
+        if ($list->json = $this->call_api(RL_API_GET_LIST, $listid, '', array('draft' => 1, 'history' => 1), $cached)) {
+            $list->name = trim($list->json->name);
+
         } else if ($list->xpath = $this->get_xpath($listid, $cached)) {
             $namequery = '//h1[@id = "pageTitle"]';
             // We only want the main text content of the h1, not its sub-elements.
