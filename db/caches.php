@@ -25,6 +25,11 @@
  */
 
 $definitions = array(
+    'jsondata' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => false,
+        'simpledata' => false
+    ),
     'listdata' => array(
         'mode' => cache_store::MODE_APPLICATION,
         'simplekeys' => false,
