@@ -1254,22 +1254,36 @@ class aspirelist {
     private function get_section_html($list, $sectionid, $itemcount, $headinglevel) {
         global $OUTPUT;
 
-        if ($section = $this->get_section_data($list->xpath, null, $sectionid)) {
-            if ($itemcount > 0) {
-                $plural = $itemcount > 1 ? 'plural' : '';
-                $itemcount = ' (' . get_string('itemcount' . $plural, 'aspirelist', $itemcount) . ')';
-                $countspan = html_writer::tag('span', $itemcount, array('class' => 'itemcount dimmed_text'));
-            } else {
-                $countspan = '';
+        if (!empty($list->json)) {
+            $sectionguid = str_replace('section-', '', $sectionid);
+            foreach ($list->json->items as $item) {
+                if (strpos($item->section->sectionUri, $sectionguid) !== false) {
+                    $section = new stdClass();
+                    $section->name = $item->section->sectionName;
+                    $section->note = ''; // Section notes not available via API yet.
+                    break;
+                }
+            }
+            if (empty($section)) {
+                return '';
             }
 
-            $heading = $OUTPUT->heading($section->name . $countspan, $headinglevel, 'sectionheading', $section->id);
-            $html = $heading . $section->note;
-
-            return $html;
+        } else if (!$section = $this->get_section_data($list->xpath, null, $sectionid)) {
+            return '';
         }
 
-        return '';
+        if ($itemcount > 0) {
+            $plural = $itemcount > 1 ? 'plural' : '';
+            $itemcount = ' (' . get_string('itemcount' . $plural, 'aspirelist', $itemcount) . ')';
+            $countspan = html_writer::tag('span', $itemcount, array('class' => 'itemcount dimmed_text'));
+        } else {
+            $countspan = '';
+        }
+
+        $heading = $OUTPUT->heading($section->name . $countspan, $headinglevel, 'sectionheading', $sectionid);
+        $html = $heading . $section->note;
+
+        return $html;
     }
 
     /**
