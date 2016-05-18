@@ -88,6 +88,9 @@ class aspirelist {
     /** @var string Regular expression matching an aspirelist item ID */
     private $itemidregex = '/^item-[A-F0-9\-]{36}$/';
 
+    /** @var bool Whether or not the Talis RL API has been fully configured */
+    private $apiconfigured = false;
+
     /** @var \Talis\Persona\Client\Tokens A Talis Persona client instance */
     private $personaclient;
 
@@ -404,6 +407,10 @@ class aspirelist {
      * @return boolean True if fully configured, else false
      */
     private function is_api_configured() {
+        if ($this->apiconfigured) {
+            return true;
+        }
+
         $adminconfig = $this->get_admin_config();
 
         $settings = array(
@@ -429,8 +436,7 @@ class aspirelist {
             return false;
         }
 
-        // Finally, make sure we have a valid API token.
-        return $this->is_token_valid();
+        return $this->apiconfigured = true;
     }
 
     /**
@@ -483,6 +489,12 @@ class aspirelist {
      * @return bool Whether or not the token is valid
      */
     private function is_token_valid() {
+
+        // Start by checking that the API is configured.
+        if (!$this->is_api_configured()) {
+            return false;
+        }
+
         require_once('vendor/autoload.php');
 
         $personaclient = $this->get_persona_client();
@@ -508,18 +520,24 @@ class aspirelist {
     /**
      * Call a specified Talis Reading Lists API method, passing the parameters provided.
      *
-     * @param string $method RL API method to call
-     * @param string $listid GUID of required list
-     * @param string $itemid GUID of required list item
-     * @param array $params Array of additional params to pass
-     * @return mixed|bool A decoded JSON string, or false
+     * @param string $method The RL API method to call
+     * @param string $listid The GUID of the required resource list
+     * @param string $itemid The GUID of the required list item
+     * @param array $params An array of additional params to pass
+     * @param bool $cached Whether to return cached data instead (if available)
+     * @return mixed|bool The decoded JSON response, or false
      */
-    private function call_api($method = RL_API_GET_LIST, $listid, $itemid = '', $params = array()) {
+    private function call_api($method = RL_API_GET_LIST, $listid, $itemid = '', $params = array(), $cached = false) {
+
+        // Make sure we have a valid API token.
+        if (!$this->is_token_valid()) {
+            return false;
+        }
 
         // Make sure we have the required data.
         if (empty($listid) || ($method == RL_API_GET_ITEM && empty($itemid))) {
             $itemreq = ($method == RL_API_GET_ITEM) ? 'and item ID ' : '';
-            debugging('Insufficient data to call API method "' . $method . '". List ID ' . $itemreq . 'required.');
+            debugging('Insufficient data to call API method "' . $method . '". List ID ' . $itemreq . 'required.', DEBUG_DEVELOPER);
             return false;
         }
 
@@ -528,8 +546,18 @@ class aspirelist {
 
         $adminconfig = $this->get_admin_config();
         $path = $adminconfig->rlapiversion . '/' . $adminconfig->tenantcode . '/lists/' . $listid . '/';
-        if ($method == 'items') {
+
+        // Create a cache object to store list data.
+        $cache = cache::make('mod_aspirelist', 'jsondata');
+        $cachedid = $listid;
+
+        if ($method == RL_API_GET_ITEM) {
             $path .= 'items/' . $itemid;
+            $cachedid = $itemid;
+        }
+
+        if ($cached and $json = $cache->get($cachedid)) {
+            return $json;
         }
 
         // Prepare cURL request data.
@@ -555,14 +583,17 @@ class aspirelist {
 
         // If all is well, return data.
         if ($curlinfo['http_code'] == 200 && !empty($json)) {
+            if (!$cache->set($cachedid, $json)) {
+                debugging('Unable to cache JSON data fetched from RL API.', DEBUG_DEVELOPER);
+            }
             return $json;
         }
 
-        // Check for invalid JSON and API errors.
+        // Check for invalid JSON and/or API errors, and log.
         if (empty($json)) {
-            debugging('Invalid JSON string', DEBUG_DEVELOPER);
+            debugging('Invalid JSON response.', DEBUG_DEVELOPER);
         } else {
-            debugging('Unknown error', DEBUG_DEVELOPER);
+            debugging('Unknown error.', DEBUG_DEVELOPER);
         }
         debugging('HTTP code: ' . $curlinfo['http_code'], DEBUG_DEVELOPER);
         debugging('API response: ' . $response, DEBUG_DEVELOPER);
