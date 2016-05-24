@@ -947,6 +947,93 @@ class aspirelist {
     }
 
     /**
+     * Fetch the data for a Talis Aspire resource list item, given the list's JSON object and an item ID.
+     *
+     * @param stdClass $json A JSON object containing the list data
+     * @param string $itemid The ID of the required item
+     * @return stdClass|bool An object containing the item data, or false
+     */
+    public function get_item_data_json($json, $itemid) {
+        global $OUTPUT;
+
+        $adminconfig = $this->get_admin_config();
+        $itemguid = str_replace('item-', '', $itemid);
+
+        foreach ($json->items as $item) {
+            if (strpos($item->uri, $itemguid) !== false) {
+                $linktitle = get_string('previewitem', 'aspirelist');
+                $linkaction = new popup_action('click', $item->uri, 'popup', array('width' => 1024, 'height' => 768));
+                $item->link = $OUTPUT->action_link($item->uri, $item->title, $linkaction, array('id' => $itemid,
+                    'class' => 'itemlink', 'title' => $linktitle));
+
+                if (!empty($item->resource->authors)) {
+                    $item->authors = ' ' . html_writer::tag('span', $item->resource->authors, array('class' => 'itemauthors'));
+                } else {
+                    $item->authors = '';
+                }
+
+                if (!empty($item->resource->date)) {
+                    $item->published = ' ' . html_writer::tag('span', $item->resource->date, array('class' => 'itempublished'));
+                } else {
+                    $item->published = '';
+                }
+
+                if (!empty($item->resource->format)) {
+                    $item->formats = ' ' . html_writer::tag('span', '(' . $item->resource->format . ')',
+                            array('class' => 'itemformats'));
+                } else {
+                    $item->formats = '';
+                }
+
+                if (!empty($item->resource->type)) {
+                    $item->resourcetype = html_writer::tag('span', $item->resource->type, array('class' => 'resourcetype'));
+                } else {
+                    $item->resourcetype = '';
+                }
+
+                if (!empty($item->importance)) {
+                    $item->importance = ' ' . html_writer::tag('span', $item->importance, array('class' => 'itemimportance'));
+                } else {
+                    $item->importance = '';
+                }
+
+                if (!empty($item->resource->studentNote)) {
+                    $item->studynote = ' ' . html_writer::tag('span', $item->resource->studentNote,
+                            array('class' => 'itemstudynote'));
+                } else {
+                    $item->studynote = '';
+                }
+
+                if ($item->resource->onlineResource && (!empty($item->resource->openUrl) || !empty($item->resource->url))) {
+                    $resourceurl = (!empty($item->resource->openUrl)) ? $item->resource->openUrl : $item->resource->url;
+                    if (strpos($resourceurl, '/') === 0) {
+                        $buttonhref = $adminconfig->aspireurl . $resourceurl;
+                    } else {
+                        $buttonhref = $resourceurl;
+                    }
+                    $buttonlabel = get_string('onlineresource', 'aspirelist');
+                    $buttontitle = $item->title;
+                    $buttonaction = new popup_action('click', $buttonhref, 'popup', array('width' => 1024, 'height' => 768));
+                    // The URL in the popup_action object is encoded, but needs to be un-encoded!
+                    $buttonaction->jsfunctionargs['url'] = $buttonhref;
+                    $item->webbutton = $OUTPUT->action_link($buttonhref, $buttonlabel, $buttonaction,
+                        array('class' => 'webbutton', 'title' => $buttontitle));
+                } else {
+                    $item->webbutton = '';
+                }
+
+                break;
+            }
+            unset($item);
+        }
+        if (empty($item)) {
+            return false;
+        }
+
+        return $item;
+    }
+
+    /**
      * Fetch the data for a Talis Aspire resource list item, given the list's DOMXPath
      * document object, and either the item's DOM node or the item ID.
      *
@@ -980,11 +1067,11 @@ class aspirelist {
             $link = $this->get_dom_nodelist($xpath, $linkquery, $itemdetails, true);
             $item->name = $link->nodeValue;
             $item->href = $link->getAttribute('href');
-            $itemtitle = get_string('previewitem', 'aspirelist');
+            $linktitle = get_string('previewitem', 'aspirelist');
 
             $linkaction = new popup_action('click', $item->href, 'popup', array('width' => 1024, 'height' => 768));
             $item->link = $OUTPUT->action_link($item->href, $item->name, $linkaction, array('id' => $item->id,
-                'class' => 'itemlink', 'title' => $itemtitle));
+                    'class' => 'itemlink', 'title' => $linktitle));
 
             $authors = $this->get_authors($xpath, $itemdetails);
             if ($authors) {
@@ -1066,7 +1153,7 @@ class aspirelist {
 
         $authorlist = '';
         foreach ($authors as $author) {
-            $authorlist .= $author->nodeValue . ', ';
+            $authorlist .= $author->nodeValue . '; ';
         }
         unset($authors);
         return substr($authorlist, 0, -2);
@@ -1310,18 +1397,24 @@ class aspirelist {
      * @return string An HTML list element containing the resource item link and details
      */
     private function get_item_html($list, $itemid) {
-        if ($item = $this->get_item_data($list->xpath, null, $itemid)) {
-            $html = html_writer::start_tag('li', array('class' => 'listitem'));
-            $html .= $item->webbutton;
-            $html .= $item->link . $item->authors. $item->published . $item->formats;
-            $html .= html_writer::empty_tag('br');
-            $html .= $item->resourcetype . $item->importance . $item->studynote;
-            $html .= html_writer::end_tag('li');
 
-            return $html;
+        // Parse list's JSON object for item data if available.
+        if (empty($list->json) || !$item = $this->get_item_data_json($list->json, $itemid)) {
+
+            // Try screen scraping as a fallback.
+            if (!$item = $this->get_item_data($list->xpath, null, $itemid)) {
+                return '';
+            }
         }
 
-        return '';
+        $html = html_writer::start_tag('li', array('class' => 'listitem'));
+        $html .= $item->webbutton;
+        $html .= $item->link . $item->authors. $item->published . $item->formats;
+        $html .= html_writer::empty_tag('br');
+        $html .= $item->resourcetype . $item->importance . $item->studynote;
+        $html .= html_writer::end_tag('li');
+
+        return $html;
     }
 
     /**
