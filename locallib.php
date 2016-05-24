@@ -525,7 +525,7 @@ class aspirelist {
      * @param string $itemid The GUID of the required list item
      * @param array $params An array of additional params to pass
      * @param bool $cached Whether to return cached data instead (if available)
-     * @return mixed|bool The decoded JSON response, or false
+     * @return stdClass|bool The decoded JSON response, or false
      */
     private function call_api($method = RL_API_GET_LIST, $listid, $itemid = '', $params = array(), $cached = false) {
 
@@ -865,6 +865,31 @@ class aspirelist {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Fetch the data for a Talis Aspire resource list section, given the list's JSON object and a section ID.
+     *
+     * @param stdClass $json A JSON object containing the list data
+     * @param string $sectionid The ID of the required section
+     * @return stdClass|bool An object containing the section data, or false
+     */
+    public function get_section_data_json($json, $sectionid) {
+        $sectionguid = str_replace('section-', '', $sectionid);
+
+        foreach ($json->items as $item) {
+            if (strpos($item->section->sectionUri, $sectionguid) !== false) {
+                $section = new stdClass();
+                $section->name = $item->section->sectionName;
+                $section->note = ''; // Section notes not available via API yet.
+                break;
+            }
+        }
+        if (empty($section)) {
+            return false;
+        }
+
+        return $section;
     }
 
     /**
@@ -1254,22 +1279,13 @@ class aspirelist {
     private function get_section_html($list, $sectionid, $itemcount, $headinglevel) {
         global $OUTPUT;
 
-        if (!empty($list->json)) {
-            $sectionguid = str_replace('section-', '', $sectionid);
-            foreach ($list->json->items as $item) {
-                if (strpos($item->section->sectionUri, $sectionguid) !== false) {
-                    $section = new stdClass();
-                    $section->name = $item->section->sectionName;
-                    $section->note = ''; // Section notes not available via API yet.
-                    break;
-                }
-            }
-            if (empty($section)) {
+        // Parse list's JSON object for section data if available.
+        if (empty($list->json) || !$section = $this->get_section_data_json($list->json, $sectionid)) {
+
+            // Try screen scraping as a fallback.
+            if (!$section = $this->get_section_data($list->xpath, null, $sectionid)) {
                 return '';
             }
-
-        } else if (!$section = $this->get_section_data($list->xpath, null, $sectionid)) {
-            return '';
         }
 
         if ($itemcount > 0) {
