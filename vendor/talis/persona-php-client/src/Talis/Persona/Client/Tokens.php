@@ -53,7 +53,7 @@ class Tokens extends Base
 
     /**
      * Validate the given token by using JWT
-     * @param string $token a token to validate explicitly, if you do not
+     * @param string $token a token to validate explicitly, if you do not 
      *      specify one the method tries to find one
      * @param string $scope specify this if you wish to validate a scoped token
      * @param int $cacheTTL time to live value in seconds for the certificate to stay within cache
@@ -69,6 +69,12 @@ class Tokens extends Base
 
         try {
             $decoded = (array) JWT::decode($token, $cert, array('RS256'));
+        } catch (\DomainException $exception) {
+            $this->getLogger()->error('Invalid signature', array($exception));
+            return false;
+        } catch (\InvalidArgumentException $exception) {
+            $this->getLogger()->error('Invalid public key', array($exception));
+            return false;
         } catch (\UnexpectedValueException $exception) {
             // Expired, before valid, invalid json, etc
             $this->getLogger()->debug('Invalid token', array($exception));
@@ -391,7 +397,7 @@ class Tokens extends Base
             $url,
             array(
                 'method' => 'POST',
-                'body' => http_build_query($query),
+                'body' => http_build_query($query, '', '&'),
             )
         );
     }

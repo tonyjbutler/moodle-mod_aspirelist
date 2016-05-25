@@ -705,16 +705,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.0.5",
+            "version": "v3.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "17b04e6b1ede45b57d3ad5146abe50df6c3968b4"
+                "reference": "807dde98589f9b2b00624dca326740380d78dbbc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/17b04e6b1ede45b57d3ad5146abe50df6c3968b4",
-                "reference": "17b04e6b1ede45b57d3ad5146abe50df6c3968b4",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/807dde98589f9b2b00624dca326740380d78dbbc",
+                "reference": "807dde98589f9b2b00624dca326740380d78dbbc",
                 "shasum": ""
             },
             "require": {
@@ -761,20 +761,20 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-12 18:09:53"
+            "time": "2016-05-05 06:56:13"
         },
         {
             "name": "talis/persona-php-client",
-            "version": "2.0.2",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/talis/persona-php-client.git",
-                "reference": "749fd4e2d18003856e8f6c199a585873f3fd892b"
+                "reference": "154a90cb550546124a1e23c38c827e4db921da7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/talis/persona-php-client/zipball/749fd4e2d18003856e8f6c199a585873f3fd892b",
-                "reference": "749fd4e2d18003856e8f6c199a585873f3fd892b",
+                "url": "https://api.github.com/repos/talis/persona-php-client/zipball/154a90cb550546124a1e23c38c827e4db921da7b",
+                "reference": "154a90cb550546124a1e23c38c827e4db921da7b",
                 "shasum": ""
             },
             "require": {
@@ -813,10 +813,10 @@
                 "php"
             ],
             "support": {
-                "source": "https://github.com/talis/persona-php-client/tree/2.0.2",
+                "source": "https://github.com/talis/persona-php-client/tree/2.0.4",
                 "issues": "https://github.com/talis/persona-php-client/issues"
             },
-            "time": "2016-04-28 16:53:17"
+            "time": "2016-05-25 13:17:54"
         }
     ],
     "packages-dev": [],

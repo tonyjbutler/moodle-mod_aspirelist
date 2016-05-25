@@ -455,68 +455,6 @@
         "homepage": "https://github.com/firebase/php-jwt"
     },
     {
-        "name": "symfony/event-dispatcher",
-        "version": "v3.0.5",
-        "version_normalized": "3.0.5.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/symfony/event-dispatcher.git",
-            "reference": "17b04e6b1ede45b57d3ad5146abe50df6c3968b4"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/17b04e6b1ede45b57d3ad5146abe50df6c3968b4",
-            "reference": "17b04e6b1ede45b57d3ad5146abe50df6c3968b4",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.5.9"
-        },
-        "require-dev": {
-            "psr/log": "~1.0",
-            "symfony/config": "~2.8|~3.0",
-            "symfony/dependency-injection": "~2.8|~3.0",
-            "symfony/expression-language": "~2.8|~3.0",
-            "symfony/stopwatch": "~2.8|~3.0"
-        },
-        "suggest": {
-            "symfony/dependency-injection": "",
-            "symfony/http-kernel": ""
-        },
-        "time": "2016-04-12 18:09:53",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "3.0-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Symfony\\Component\\EventDispatcher\\": ""
-            },
-            "exclude-from-classmap": [
-                "/Tests/"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Fabien Potencier",
-                "email": "fabien@symfony.com"
-            },
-            {
-                "name": "Symfony Community",
-                "homepage": "https://symfony.com/contributors"
-            }
-        ],
-        "description": "Symfony EventDispatcher Component",
-        "homepage": "https://symfony.com"
-    },
-    {
         "name": "guzzlehttp/guzzle",
         "version": "v3.8.1",
         "version_normalized": "3.8.1.0",
@@ -780,18 +718,80 @@
         ]
     },
     {
-        "name": "talis/persona-php-client",
-        "version": "2.0.2",
-        "version_normalized": "2.0.2.0",
+        "name": "symfony/event-dispatcher",
+        "version": "v3.0.6",
+        "version_normalized": "3.0.6.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/talis/persona-php-client.git",
-            "reference": "749fd4e2d18003856e8f6c199a585873f3fd892b"
+            "url": "https://github.com/symfony/event-dispatcher.git",
+            "reference": "807dde98589f9b2b00624dca326740380d78dbbc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/talis/persona-php-client/zipball/749fd4e2d18003856e8f6c199a585873f3fd892b",
-            "reference": "749fd4e2d18003856e8f6c199a585873f3fd892b",
+            "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/807dde98589f9b2b00624dca326740380d78dbbc",
+            "reference": "807dde98589f9b2b00624dca326740380d78dbbc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.5.9"
+        },
+        "require-dev": {
+            "psr/log": "~1.0",
+            "symfony/config": "~2.8|~3.0",
+            "symfony/dependency-injection": "~2.8|~3.0",
+            "symfony/expression-language": "~2.8|~3.0",
+            "symfony/stopwatch": "~2.8|~3.0"
+        },
+        "suggest": {
+            "symfony/dependency-injection": "",
+            "symfony/http-kernel": ""
+        },
+        "time": "2016-05-05 06:56:13",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\EventDispatcher\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony EventDispatcher Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "talis/persona-php-client",
+        "version": "2.0.4",
+        "version_normalized": "2.0.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/talis/persona-php-client.git",
+            "reference": "154a90cb550546124a1e23c38c827e4db921da7b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/talis/persona-php-client/zipball/154a90cb550546124a1e23c38c827e4db921da7b",
+            "reference": "154a90cb550546124a1e23c38c827e4db921da7b",
             "shasum": ""
         },
         "require": {
@@ -806,7 +806,7 @@
         "require-dev": {
             "phpunit/phpunit": "4.2.0"
         },
-        "time": "2016-04-28 16:53:17",
+        "time": "2016-05-25 13:17:54",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -832,7 +832,7 @@
             "php"
         ],
         "support": {
-            "source": "https://github.com/talis/persona-php-client/tree/2.0.2",
+            "source": "https://github.com/talis/persona-php-client/tree/2.0.4",
             "issues": "https://github.com/talis/persona-php-client/issues"
         }
     }
