@@ -85,8 +85,8 @@ class mod_aspirelist_mod_form extends moodleform_mod {
             if ($lists = $this->aspirelist->get_lists($course)) {
                 $this->setup_list_elements($mform, $lists);
             } else {
-                $module = rtrim(strtolower($config->knowledgegroup), 's');
-                $noaspirelists = $OUTPUT->heading(get_string('noaspirelists', 'aspirelist', $module), 3, 'warning');
+                $strcourse = get_string('course');
+                $noaspirelists = $OUTPUT->heading(get_string('noaspirelists', 'aspirelist', $strcourse), 3, 'warning');
                 $mform->addElement('html', $noaspirelists);
             }
         } else {
