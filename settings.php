@@ -99,4 +99,6 @@ if ($ADMIN->fulltree) {
             get_string('configcoursecolumn', 'aspirelist'), '', PARAM_TEXT));
     $settings->add(new aspirelist_courseattribute_setting('aspirelist/courseattribute',
             get_string('courseattribute', 'aspirelist'), get_string('configcourseattribute', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/kgcolumn', get_string('kgcolumn', 'aspirelist'),
+            get_string('configkgcolumn', 'aspirelist'), '', PARAM_TEXT));
 }
