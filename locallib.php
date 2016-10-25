@@ -637,29 +637,22 @@ class aspirelist {
             $coursecolumn = $adminconfig->coursecolumn;
             $courseattribute = $course->{$adminconfig->courseattribute};
 
-            if (!$codes = $DB->get_records($codetable, array($coursecolumn => $courseattribute), null, 'id, ' . $codecolumn)) {
-                $codes = array();
+            $codes = array();
+            if ($records = $DB->get_records($codetable, array($coursecolumn => $courseattribute))) {
+                foreach ($records as $index => $record) {
+                    $codes[$index]['code'] = $record->$codecolumn;
+                    if ($kgcolumn = $adminconfig->kgcolumn and !empty($record->$kgcolumn)) {
+                        $codes[$index]['kg'] = $record->$kgcolumn;
+                    }
+                }
             }
-            $codes = array_map(create_function('$code', 'return $code->' . $codecolumn . ';'), $codes);
+        } else if ($adminconfig->codesource == 'shortname') {
+            $codes = $this->extract_codes($course->shortname);
         }
 
-        // Try ID number as fallback if no code found in code table, regardless of code source specified in admin config.
+        // Try ID number as fallback if no code found so far, regardless of code source specified in admin config.
         if ($adminconfig->codesource == 'idnumber' || empty($codes)) {
-            if ($coderegex = $adminconfig->coderegex) {
-                preg_match_all($coderegex, $course->idnumber, $codes, PREG_PATTERN_ORDER);
-                $codes = (!empty($codes[1])) ? $codes[1] : $codes[0];
-            } else {
-                $codes = array($course->idnumber);
-            }
-        }
-
-        if ($adminconfig->codesource == 'shortname') {
-            if ($coderegex = $adminconfig->coderegex) {
-                preg_match_all($coderegex, $course->shortname, $codes, PREG_PATTERN_ORDER);
-                $codes = (!empty($codes[1])) ? $codes[1] : $codes[0];
-            } else {
-                $codes = array($course->shortname);
-            }
+            $codes = $this->extract_codes($course->idnumber);
         }
 
         // Check for additional codes in meta child courses (if enabled in site config).
@@ -671,7 +664,27 @@ class aspirelist {
             }
         }
 
-        return array_unique(array_filter($codes));
+        return array_filter($codes);
+    }
+
+    /**
+     * Extract one or more Talis Aspire list codes from a given source string.
+     *
+     * @param string $source A string containing one or more codes
+     * @return array An array of Aspire list codes
+     */
+    private function extract_codes($source) {
+        $adminconfig = $this->get_admin_config();
+
+        if ($coderegex = $adminconfig->coderegex) {
+            preg_match_all($coderegex, $source, $codes, PREG_PATTERN_ORDER);
+            $codes = (!empty($codes[1])) ? $codes[1] : $codes[0];
+        } else {
+            $codes = array($source);
+        }
+        $codes = array_unique($codes);
+
+        return array_map(create_function('$code', 'return array(\'code\' => $code);'), $codes);
     }
 
     /**
@@ -697,6 +710,42 @@ class aspirelist {
     }
 
     /**
+     * Return the pluralised version of a given knowledge group name (as used in Aspire URLs),
+     * or that of the admin configured default knowledge group if not valid.
+     *
+     * @param string $name Official name of an Aspire knowledge group
+     * @return string Pluralised name as used in Aspire URLs
+     */
+    private function get_url_knowledge_group($name) {
+        $adminconfig = $this->get_admin_config();
+        $name = strtolower($name);
+        $knowledgegroups = array(
+            'center'      => 'centers',
+            'college'     => 'colleges',
+            'course'      => 'courses',
+            'department'  => 'departments',
+            'division'    => 'divisions',
+            'faculty'     => 'faculties',
+            'field'       => 'fields',
+            'institute'   => 'institutes',
+            'institution' => 'institutions',
+            'level'       => 'levels',
+            'module'      => 'modules',
+            'pathway'     => 'pathways',
+            'programme'   => 'programmes',
+            'school'      => 'schools',
+            'subject'     => 'subjects',
+            'unit'        => 'units'
+        );
+
+        if (!in_array($name, array_keys($knowledgegroups))) {
+            return $adminconfig->knowledgegroup;
+        }
+
+        return $knowledgegroups[$name];
+    }
+
+    /**
      * Fetch all Talis Aspire lists associated with the current course (and year if applicable).
      *
      * @param stdClass $course The data for the current course
@@ -717,8 +766,10 @@ class aspirelist {
         $lists = array();
 
         foreach ($codes as $code) {
+            $knowledgegroup = isset($code['kg']) ? $this->get_url_knowledge_group($code['kg']) : $adminconfig->knowledgegroup;
+
             // Build the URL for the JSON request.
-            $codedata = $adminconfig->aspireurl . '/' . $adminconfig->knowledgegroup . '/' . strtolower($code);
+            $codedata = $adminconfig->aspireurl . '/' . $knowledgegroup . '/' . strtolower($code['code']);
             if ($year) {
                 $url = $codedata . '/lists/' . $year . '.json';
             } else {

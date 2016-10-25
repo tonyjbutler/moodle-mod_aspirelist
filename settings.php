@@ -101,6 +101,8 @@ if ($ADMIN->fulltree) {
             get_string('coursecolumn_desc', 'aspirelist'), '', PARAM_TEXT));
     $settings->add(new aspirelist_courseattribute_setting('aspirelist/courseattribute',
             get_string('courseattribute', 'aspirelist'), get_string('courseattribute_desc', 'aspirelist'), '', PARAM_TEXT));
+    $settings->add(new admin_setting_configtext('aspirelist/kgcolumn', get_string('kgcolumn', 'aspirelist'),
+            get_string('kgcolumn_desc', 'aspirelist'), '', PARAM_TEXT));
 
     // Meta child codes.
     $settings->add(new admin_setting_configcheckbox('aspirelist/includechildcodes', get_string('includechildcodes', 'aspirelist'),
