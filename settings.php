@@ -92,7 +92,7 @@ if ($ADMIN->fulltree) {
 
     // Code table details.
     $settings->add(new aspirelist_codetable_setting('aspirelist/codetable', get_string('codetable', 'aspirelist'),
-            get_string('configcodetable', 'aspirelist'), '', PARAM_TEXT));
+            get_string('configcodetable', 'aspirelist'), $CFG->prefix, PARAM_TEXT));
     $settings->add(new aspirelist_codecolumn_setting('aspirelist/codecolumn', get_string('codecolumn', 'aspirelist'),
             get_string('configcodecolumn', 'aspirelist'), '', PARAM_TEXT));
     $settings->add(new aspirelist_coursecolumn_setting('aspirelist/coursecolumn', get_string('coursecolumn', 'aspirelist'),
