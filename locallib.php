@@ -563,6 +563,7 @@ class aspirelist {
             }
 
             $curl = new curl(array('cache' => 'true', 'module_cache' => 'mod_aspirelist'));
+            $curl->setopt(array('CURLOPT_TIMEOUT' => 30));
             if ($response = $curl->get($url)) {
                 $data = json_decode($response, true);
                 if (isset($data[$codedata]) && isset($data[$codedata]['http://purl.org/vocab/resourcelist/schema#usesList'])) {
