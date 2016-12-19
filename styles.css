@@ -27,38 +27,32 @@
     margin-top: 0;
 }
 
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h3, #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h4,
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h5, #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] h6 {
-    margin: 1em 0 0 24px;
-}
-
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] div.sectionnote {
-    margin-left: 24px;
-}
-
 #page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem {
     margin-bottom: 0;
 }
 
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit {
-    margin-top: 0.5em;
-    margin-left: 24px !important;
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .felement {
+    margin-top: 0.4em;
 }
 
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem_fcheckbox .fitemtitle {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit {
+    margin-left: 21%;
+}
+
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitemtitle {
     width: 77% !important;
     text-align: left;
     float: right;
 }
 
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem_fcheckbox .fcheckbox {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fadvcheckbox {
     margin: 0 0 0 24px;
     width: 5% !important;
     text-align: right;
     float: right !important;
 }
 
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .felement a {
 	color: #777;
 	text-decoration: none;
 	text-shadow: 0 1px 0 #FFF;
@@ -77,8 +71,8 @@
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#EDEDED', endColorstr='#DFDFDF');
 }
 
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a:active,
-#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .fsubmit a:hover {
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .felement a:active,
+#page-mod-aspirelist-mod .mform fieldset[id^="id_list-"] .fitem .felement a:hover {
 	background-color: #DFDFDF;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #DFDFDF), color-stop(1, #EDEDED));
 	background: -moz-linear-gradient(center top, #DFDFDF 5%, #EDEDED 100%);
@@ -91,8 +85,8 @@ div.aspirelistbox {
 
 #page-mod-aspirelist-view div.listsection, div.aspirelistbox div.listsection {
     text-shadow: 0 1px 0 #FFF;
-    margin-bottom: 1em;
-    padding: 0 1.5em;
+    margin: 1em 0;
+    padding: 0.5em 1em 0;
     border: 1px solid #E3E3E3;
     background-color: #F5F5F5;
 	-webkit-border-radius: 4px;
@@ -108,11 +102,7 @@ div.aspirelistbox {
 div.aspirelistbox h3.sectionheading, div.aspirelistbox h4.sectionheading,
 div.aspirelistbox h5.sectionheading, div.aspirelistbox h6.sectionheading {
     text-align: left;
-}
-
-#page-mod-aspirelist-view div.sectionnote,
-div.aspirelistbox div.sectionnote {
-    margin-bottom: 1em;
+    margin: 0;
 }
 
 #page-mod-aspirelist-view ul.sectionitems, div.aspirelistbox ul.sectionitems {
