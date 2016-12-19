@@ -36,6 +36,18 @@ Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 Changelog
 ---------
 
+2016-12-19  v3.2.0
+
+  * Refactor and reorganise admin config settings form
+  * Update styles to support Boost and other theme changes
+
+2016-12-19  v3.2.0/2.9.6
+
+  * Include all valid node types in knowledge group options
+  * Enable per list knowledge group config via custom table
+  * Use $CFG->prefix as default for custom database table
+  * Set cURL timeout option to 30 seconds
+
 2016-05-25  v2.9.5
 
   * Suppress DOMDocument 'invalid tags' debug messages
@@ -106,13 +118,13 @@ Installing from the Git repository (recommended if you installed Moodle from
 Git):
 
 Follow the instructions at
-http://docs.moodle.org/31/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository,
-e.g. for the Moodle 3.1.x code:
+http://docs.moodle.org/32/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository,
+e.g. for the Moodle 3.2.x code:
 $ cd /path/to/your/moodle/
 $ cd mod/
 $ git clone https://github.com/tonyjbutler/moodle-mod_aspirelist.git aspirelist
 $ cd aspirelist/
-$ git checkout -b MOODLE_31_STABLE origin/MOODLE_31_STABLE
+$ git checkout -b MOODLE_32_STABLE origin/MOODLE_32_STABLE
 $ git branch -d master
 $ cd /path/to/your/moodle/
 $ echo /mod/aspirelist/ >> .git/info/exclude
@@ -133,7 +145,7 @@ Updating Moodle
 ---------------
 If you installed Moodle and the Aspire resource list module from Git you can
 run the following commands to update both (see
-http://docs.moodle.org/31/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository):
+http://docs.moodle.org/32/en/Git_for_Administrators#Installing_a_contributed_extension_from_its_Git_repository):
 $ cd /path/to/your/moodle/
 $ git pull
 $ cd mod/aspirelist/
