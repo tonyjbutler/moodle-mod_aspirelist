@@ -36,6 +36,13 @@ Sussex and Falmouth Exeter Plus (on behalf of Falmouth University).
 Changelog
 ---------
 
+2016-12-19  v2.9.6
+
+  * Include all valid node types in knowledge group options
+  * Enable per list knowledge group config via custom table
+  * Use $CFG->prefix as default for custom database table
+  * Set cURL timeout option to 30 seconds
+
 2016-05-25  v2.9.5
 
   * Suppress DOMDocument 'invalid tags' debug messages
