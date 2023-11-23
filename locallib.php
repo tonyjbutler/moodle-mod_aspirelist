@@ -470,7 +470,7 @@ class aspirelist {
         }
         $codes = array_unique($codes);
 
-        return array_map(create_function('$code', 'return array(\'code\' => $code);'), $codes);
+        return array_map(function($code) {return array('code' => $code);}, $codes);
     }
 
     /**
@@ -582,7 +582,7 @@ class aspirelist {
         unset($codes);
 
         // Sort the lists by name.
-        $keys = array_map(create_function('$a', 'return strtolower($a->name);'), $lists);
+        $keys = array_map(function($a) {return strtolower($a->name);}, $lists);
         array_multisort($keys, SORT_ASC, SORT_STRING, $lists);
 
         return $lists;

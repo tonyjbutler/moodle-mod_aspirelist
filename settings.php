@@ -39,7 +39,7 @@ if ($ADMIN->fulltree) {
     $optionsdd[0] = get_string('displaypage', 'aspirelist');
     $optionsdd[1] = get_string('displayinline', 'aspirelist');
     $settings->add(new admin_setting_configselect('aspirelist/defaultdisplay', get_string('defaultdisplay', 'aspirelist'),
-            get_string('defaultdisplay_desc', 'aspirelist'), 'displaypage', $optionsdd));
+            get_string('defaultdisplay_desc', 'aspirelist'), 0, $optionsdd));
 
     // Authors in module config form.
     $settings->add(new admin_setting_configcheckbox('aspirelist/authorsinconfig', get_string('authorsinconfig', 'aspirelist'),
